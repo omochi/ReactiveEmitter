@@ -15,7 +15,9 @@ public class Property<Value> : EventSourceProtocol {
     }
     
     public func subscribe(_ handler: @escaping (Value) -> Void) -> Disposer {
-        return emitter.subscribe(handler)
+        let disposer = emitter.subscribe(handler)
+        handler(_value)
+        return disposer
     }
     
     private var _value: Value
