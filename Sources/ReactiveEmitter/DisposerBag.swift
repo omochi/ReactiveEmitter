@@ -2,6 +2,10 @@ public class DisposerBag {
     public init() {}
     
     deinit {
+        dispose()
+    }
+    
+    func dispose() {
         cd.dispose()
     }
     
