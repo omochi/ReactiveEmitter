@@ -8,37 +8,48 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
     }
     
     public func subscribe(_ handler: @escaping (U) -> Void) -> Disposer {
-        let sink = Sink(flatMap: flatMap, handler: handler)
-        return source.subscribe { sink.send($0) }
+        return Sink(source: source,
+                    flatMap: flatMap,
+                    handler: handler).asDisposer()
     }
     
-    private class Sink {
-        public init(flatMap: @escaping (T) -> USource, handler: @escaping (U) -> Void) {
+    private let source: TSource
+    private let flatMap: (T) -> USource
+    
+    private class Sink : DisposerProtocol {
+        public init(source: TSource,
+                    flatMap: @escaping (T) -> USource,
+                    handler: @escaping (U) -> Void)
+        {
             self.flatMap = flatMap
             self.handler = handler
             self.disposer = CompositeDisposer()
+            self.innerDisposer = CompositeDisposer()
+            
+            disposer.add(innerDisposer)
+            disposer.add(source.subscribe {
+                self.send($0)
+            })
         }
         
         public func dispose() {
             disposer.dispose()
         }
         
-        public func send(_ t: T) {
-            dispose()
+        private func send(_ t: T) {
+            innerDisposer.dispose()
+            
             let uSource: USource = flatMap(t)
-            let uDisposer = uSource.subscribe { [weak self] (u: U) in
-                self?.handler(u)
-            }
-            disposer.add(uDisposer)
+            innerDisposer.add(uSource.subscribe { [handler] (u: U) in
+                handler(u)
+            })
         }
         
         private let flatMap: (T) -> USource
         private let handler: (U) -> Void
-        private let disposer : CompositeDisposer
+        private let disposer: CompositeDisposer
+        private let innerDisposer: CompositeDisposer
     }
-    
-    private let source: TSource
-    private let flatMap: (T) -> USource
 }
 
 extension EventSourceProtocol {

@@ -9,21 +9,41 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
     }
     
     public func subscribe(_ handler: @escaping (T) -> Void) -> Disposer {
-        let sink = Sink(dispatchQueue: dispatchQueue, handler: handler)
-        let disposer = CompositeDisposer()
-        disposer.add(source.subscribe { sink.send($0) })
-        disposer.add(Disposer { sink.dispose() })
-        return disposer.asDisposer()
+        return Sink(source: source,
+                    dispatchQueue: dispatchQueue,
+                    handler: handler).asDisposer()
     }
     
-    private class Sink {
-        public init(dispatchQueue: DispatchQueue, handler: @escaping (T) -> Void) {
+    private let source: TSource
+    private let dispatchQueue: DispatchQueue
+    
+    private class Sink : DisposerProtocol {
+        public init(source: TSource,
+                    dispatchQueue: DispatchQueue,
+                    handler: @escaping (T) -> Void)
+        {
             self.dispatchQueue = dispatchQueue
             self.handler = handler
             self.lock = NSLock()
+            self.disposer = CompositeDisposer()
+            
+            disposer.add(source.subscribe {
+                self.send($0)
+            })
+            disposer.add(Disposer { [weak self] in
+                self?.disposed = true
+            })
         }
         
-        public func send(_ t: T) {
+        public func dispose() {
+            lock.scope {
+                disposed = true
+            }
+            
+            disposer.dispose()
+        }
+        
+        private func send(_ t: T) {
             dispatchQueue.async {
                 let disposed = self.lock.scope { self.disposed }
                 if disposed {
@@ -34,18 +54,12 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
             }
         }
         
-        public func dispose() {
-            lock.scope { disposed = true }
-        }
-        
         private let dispatchQueue: DispatchQueue
         private let handler: (T) -> Void
         private let lock: NSLock
+        private let disposer: CompositeDisposer
         private var disposed: Bool = false
     }
-    
-    private let source: TSource
-    private let dispatchQueue: DispatchQueue
 }
 
 extension EventSourceProtocol {

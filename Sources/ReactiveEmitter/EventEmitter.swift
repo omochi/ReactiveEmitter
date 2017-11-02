@@ -22,14 +22,24 @@ public class EventEmitter<Event> : EventSourceProtocol {
             handlers.append(handlerBox)
         }
         
-        return Disposer { [weak self] in
-            self?.unsubscribe(handlerBox)
+        weak var wself = self
+        
+        return Disposer { [wself, weak handlerBox] in
+            guard let sself = wself else {
+                return
+            }
+            guard let handlerBox = handlerBox else {
+                return
+            }
+            sself.unsubscribe(handlerBox)
         }
     }
 
     private func unsubscribe(_ box: Box<(Event) -> Void>) {
         lock.scope {
-            handlers = handlers.filter { $0 !== box }
+            while let index = (handlers.index { $0 === box }) {
+                handlers.remove(at: index)
+            }
         }
     }
     
