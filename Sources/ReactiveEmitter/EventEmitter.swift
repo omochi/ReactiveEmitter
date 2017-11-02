@@ -1,8 +1,15 @@
+import Foundation
+
 public class EventEmitter<Event> : EventSourceProtocol {
-    public init() {}
+    public init() {
+        lock = NSLock()
+    }
     
     public func emit(_ event: Event) {
-        let handlers = self.handlers
+        let handlers = lock.scope {
+            self.handlers
+        }
+
         handlers.forEach { handler in
             handler.value(event)
         }
@@ -10,15 +17,22 @@ public class EventEmitter<Event> : EventSourceProtocol {
     
     public func subscribe(_ handler: @escaping (Event) -> Void) -> Disposer {
         let handlerBox = Box(handler)
-        handlers.append(handlerBox)
+        
+        lock.scope {
+            handlers.append(handlerBox)
+        }
+        
         return Disposer { [weak self] in
             self?.unsubscribe(handlerBox)
         }
     }
 
     private func unsubscribe(_ box: Box<(Event) -> Void>) {
-        handlers = handlers.filter { $0 !== box }
+        lock.scope {
+            handlers = handlers.filter { $0 !== box }
+        }
     }
     
     private var handlers: [Box<(Event) -> Void>] = []
+    private let lock: NSLock
 }

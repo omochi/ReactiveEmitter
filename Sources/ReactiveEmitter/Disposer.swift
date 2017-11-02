@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol DisposerProtocol {
     func dispose()
     
@@ -13,14 +15,17 @@ extension DisposerProtocol {
 public class Disposer : DisposerProtocol {
     public init(_ f: (() -> Void)?) {
         self.f = f
+        self.lock = NSLock()
     }
     
     public func dispose() {
-        guard let f = self.f else {
-            return
+        let f: (() -> Void)? = lock.scope {
+            let sf = self.f
+            self.f = nil
+            return sf
         }
-        self.f = nil
-        f()
+    
+        f?()
     }
     
     public func asDisposer() -> Disposer {
@@ -28,4 +33,5 @@ public class Disposer : DisposerProtocol {
     }
     
     private var f: (() -> Void)?
+    private let lock: NSLock
 }

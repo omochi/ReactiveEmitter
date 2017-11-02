@@ -5,7 +5,7 @@ public class DisposerBag {
         dispose()
     }
     
-    func dispose() {
+    public func dispose() {
         cd.dispose()
     }
     

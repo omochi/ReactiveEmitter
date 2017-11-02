@@ -18,6 +18,8 @@
 		D6A848561FA997710066505A /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484C1FA997710066505A /* Map.swift */; };
 		D6A848571FA997710066505A /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484D1FA997710066505A /* Merge.swift */; };
 		D6A848581FA997710066505A /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484E1FA997710066505A /* Property.swift */; };
+		D6BDA8361FAB1A6A00A0AC47 /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */; };
+		D6BDA8381FAB1B2A00A0AC47 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDA8371FAB1B2A00A0AC47 /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		D6A8484C1FA997710066505A /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		D6A8484D1FA997710066505A /* Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge.swift; sourceTree = "<group>"; };
 		D6A8484E1FA997710066505A /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveOn.swift; sourceTree = "<group>"; };
+		D6BDA8371FAB1B2A00A0AC47 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,7 @@
 		D6A848431FA997710066505A /* ReactiveEmitter */ = {
 			isa = PBXGroup;
 			children = (
+				D6BDA8371FAB1B2A00A0AC47 /* Util.swift */,
 				D6A848441FA997710066505A /* Box.swift */,
 				D6A848451FA997710066505A /* CompositeDisposer.swift */,
 				D6A848461FA997710066505A /* Disposer.swift */,
@@ -95,6 +100,7 @@
 				D6A8484B1FA997710066505A /* FlatMapLatest.swift */,
 				D6A8484C1FA997710066505A /* Map.swift */,
 				D6A8484D1FA997710066505A /* Merge.swift */,
+				D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */,
 			);
 			path = Operator;
 			sourceTree = "<group>";
@@ -182,8 +188,10 @@
 				D6A848571FA997710066505A /* Merge.swift in Sources */,
 				D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */,
 				D6A848551FA997710066505A /* FlatMapLatest.swift in Sources */,
+				D6BDA8361FAB1A6A00A0AC47 /* ObserveOn.swift in Sources */,
 				D6A848561FA997710066505A /* Map.swift in Sources */,
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
+				D6BDA8381FAB1B2A00A0AC47 /* Util.swift in Sources */,
 				D6A8484F1FA997710066505A /* Box.swift in Sources */,
 				D6A848541FA997710066505A /* EventSource.swift in Sources */,
 				D6A848531FA997710066505A /* EventEmitter.swift in Sources */,
