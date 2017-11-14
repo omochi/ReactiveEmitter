@@ -8,32 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		D66E4D721FA7247F00D1900E /* ReactiveEmitter_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D66E4D701FA7247F00D1900E /* ReactiveEmitter_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D66E4D841FA724DD00D1900E /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D791FA724DC00D1900E /* Box.swift */; };
-		D66E4D851FA724DD00D1900E /* CompositeDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D7A1FA724DC00D1900E /* CompositeDisposer.swift */; };
-		D66E4D861FA724DD00D1900E /* Disposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D7B1FA724DC00D1900E /* Disposer.swift */; };
-		D66E4D871FA724DD00D1900E /* DisposerBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D7C1FA724DC00D1900E /* DisposerBag.swift */; };
-		D66E4D881FA724DD00D1900E /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D7D1FA724DC00D1900E /* EventEmitter.swift */; };
-		D66E4D891FA724DD00D1900E /* EventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D7E1FA724DC00D1900E /* EventSource.swift */; };
-		D66E4D8A1FA724DD00D1900E /* FlatMapLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D801FA724DC00D1900E /* FlatMapLatest.swift */; };
-		D66E4D8B1FA724DD00D1900E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D811FA724DC00D1900E /* Map.swift */; };
-		D66E4D8C1FA724DD00D1900E /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D821FA724DC00D1900E /* Merge.swift */; };
-		D66E4D8D1FA724DD00D1900E /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E4D831FA724DC00D1900E /* Property.swift */; };
+		D68EEB431FAB44410080E6CD /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB361FAB44410080E6CD /* Box.swift */; };
+		D68EEB441FAB44410080E6CD /* CompositeDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB371FAB44410080E6CD /* CompositeDisposer.swift */; };
+		D68EEB451FAB44410080E6CD /* Disposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB381FAB44410080E6CD /* Disposer.swift */; };
+		D68EEB461FAB44410080E6CD /* DisposerBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB391FAB44410080E6CD /* DisposerBag.swift */; };
+		D68EEB471FAB44410080E6CD /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB3A1FAB44410080E6CD /* EventEmitter.swift */; };
+		D68EEB481FAB44410080E6CD /* EventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB3B1FAB44410080E6CD /* EventSource.swift */; };
+		D68EEB491FAB44410080E6CD /* FlatMapLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB3D1FAB44410080E6CD /* FlatMapLatest.swift */; };
+		D68EEB4A1FAB44410080E6CD /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB3E1FAB44410080E6CD /* Map.swift */; };
+		D68EEB4B1FAB44410080E6CD /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB3F1FAB44410080E6CD /* Merge.swift */; };
+		D68EEB4C1FAB44410080E6CD /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB401FAB44410080E6CD /* ObserveOn.swift */; };
+		D68EEB4D1FAB44410080E6CD /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB411FAB44410080E6CD /* Property.swift */; };
+		D68EEB4E1FAB44410080E6CD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EEB421FAB44410080E6CD /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D66E4D6D1FA7247F00D1900E /* ReactiveEmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveEmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D66E4D701FA7247F00D1900E /* ReactiveEmitter_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactiveEmitter_iOS.h; sourceTree = "<group>"; };
 		D66E4D711FA7247F00D1900E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D66E4D791FA724DC00D1900E /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
-		D66E4D7A1FA724DC00D1900E /* CompositeDisposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeDisposer.swift; sourceTree = "<group>"; };
-		D66E4D7B1FA724DC00D1900E /* Disposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposer.swift; sourceTree = "<group>"; };
-		D66E4D7C1FA724DC00D1900E /* DisposerBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposerBag.swift; sourceTree = "<group>"; };
-		D66E4D7D1FA724DC00D1900E /* EventEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEmitter.swift; sourceTree = "<group>"; };
-		D66E4D7E1FA724DC00D1900E /* EventSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSource.swift; sourceTree = "<group>"; };
-		D66E4D801FA724DC00D1900E /* FlatMapLatest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMapLatest.swift; sourceTree = "<group>"; };
-		D66E4D811FA724DC00D1900E /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
-		D66E4D821FA724DC00D1900E /* Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge.swift; sourceTree = "<group>"; };
-		D66E4D831FA724DC00D1900E /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		D68EEB361FAB44410080E6CD /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		D68EEB371FAB44410080E6CD /* CompositeDisposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeDisposer.swift; sourceTree = "<group>"; };
+		D68EEB381FAB44410080E6CD /* Disposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposer.swift; sourceTree = "<group>"; };
+		D68EEB391FAB44410080E6CD /* DisposerBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposerBag.swift; sourceTree = "<group>"; };
+		D68EEB3A1FAB44410080E6CD /* EventEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEmitter.swift; sourceTree = "<group>"; };
+		D68EEB3B1FAB44410080E6CD /* EventSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSource.swift; sourceTree = "<group>"; };
+		D68EEB3D1FAB44410080E6CD /* FlatMapLatest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMapLatest.swift; sourceTree = "<group>"; };
+		D68EEB3E1FAB44410080E6CD /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		D68EEB3F1FAB44410080E6CD /* Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge.swift; sourceTree = "<group>"; };
+		D68EEB401FAB44410080E6CD /* ObserveOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserveOn.swift; sourceTree = "<group>"; };
+		D68EEB411FAB44410080E6CD /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		D68EEB421FAB44410080E6CD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +54,7 @@
 		D66E4D631FA7247F00D1900E = {
 			isa = PBXGroup;
 			children = (
-				D66E4D781FA724DC00D1900E /* ReactiveEmitter */,
+				D68EEB351FAB44410080E6CD /* ReactiveEmitter */,
 				D66E4D6F1FA7247F00D1900E /* ReactiveEmitter-iOS */,
 				D66E4D6E1FA7247F00D1900E /* Products */,
 			);
@@ -73,28 +77,30 @@
 			path = "ReactiveEmitter-iOS";
 			sourceTree = "<group>";
 		};
-		D66E4D781FA724DC00D1900E /* ReactiveEmitter */ = {
+		D68EEB351FAB44410080E6CD /* ReactiveEmitter */ = {
 			isa = PBXGroup;
 			children = (
-				D66E4D7F1FA724DC00D1900E /* Operator */,
-				D66E4D791FA724DC00D1900E /* Box.swift */,
-				D66E4D7A1FA724DC00D1900E /* CompositeDisposer.swift */,
-				D66E4D7B1FA724DC00D1900E /* Disposer.swift */,
-				D66E4D7C1FA724DC00D1900E /* DisposerBag.swift */,
-				D66E4D7D1FA724DC00D1900E /* EventEmitter.swift */,
-				D66E4D7E1FA724DC00D1900E /* EventSource.swift */,
-				D66E4D831FA724DC00D1900E /* Property.swift */,
+				D68EEB361FAB44410080E6CD /* Box.swift */,
+				D68EEB371FAB44410080E6CD /* CompositeDisposer.swift */,
+				D68EEB381FAB44410080E6CD /* Disposer.swift */,
+				D68EEB391FAB44410080E6CD /* DisposerBag.swift */,
+				D68EEB3A1FAB44410080E6CD /* EventEmitter.swift */,
+				D68EEB3B1FAB44410080E6CD /* EventSource.swift */,
+				D68EEB3C1FAB44410080E6CD /* Operator */,
+				D68EEB411FAB44410080E6CD /* Property.swift */,
+				D68EEB421FAB44410080E6CD /* Util.swift */,
 			);
 			name = ReactiveEmitter;
 			path = ../../../Sources/ReactiveEmitter;
 			sourceTree = "<group>";
 		};
-		D66E4D7F1FA724DC00D1900E /* Operator */ = {
+		D68EEB3C1FAB44410080E6CD /* Operator */ = {
 			isa = PBXGroup;
 			children = (
-				D66E4D801FA724DC00D1900E /* FlatMapLatest.swift */,
-				D66E4D811FA724DC00D1900E /* Map.swift */,
-				D66E4D821FA724DC00D1900E /* Merge.swift */,
+				D68EEB3D1FAB44410080E6CD /* FlatMapLatest.swift */,
+				D68EEB3E1FAB44410080E6CD /* Map.swift */,
+				D68EEB3F1FAB44410080E6CD /* Merge.swift */,
+				D68EEB401FAB44410080E6CD /* ObserveOn.swift */,
 			);
 			path = Operator;
 			sourceTree = "<group>";
@@ -178,16 +184,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D66E4D8D1FA724DD00D1900E /* Property.swift in Sources */,
-				D66E4D8C1FA724DD00D1900E /* Merge.swift in Sources */,
-				D66E4D851FA724DD00D1900E /* CompositeDisposer.swift in Sources */,
-				D66E4D8A1FA724DD00D1900E /* FlatMapLatest.swift in Sources */,
-				D66E4D8B1FA724DD00D1900E /* Map.swift in Sources */,
-				D66E4D861FA724DD00D1900E /* Disposer.swift in Sources */,
-				D66E4D841FA724DD00D1900E /* Box.swift in Sources */,
-				D66E4D891FA724DD00D1900E /* EventSource.swift in Sources */,
-				D66E4D881FA724DD00D1900E /* EventEmitter.swift in Sources */,
-				D66E4D871FA724DD00D1900E /* DisposerBag.swift in Sources */,
+				D68EEB4B1FAB44410080E6CD /* Merge.swift in Sources */,
+				D68EEB4C1FAB44410080E6CD /* ObserveOn.swift in Sources */,
+				D68EEB4D1FAB44410080E6CD /* Property.swift in Sources */,
+				D68EEB441FAB44410080E6CD /* CompositeDisposer.swift in Sources */,
+				D68EEB491FAB44410080E6CD /* FlatMapLatest.swift in Sources */,
+				D68EEB4A1FAB44410080E6CD /* Map.swift in Sources */,
+				D68EEB451FAB44410080E6CD /* Disposer.swift in Sources */,
+				D68EEB4E1FAB44410080E6CD /* Util.swift in Sources */,
+				D68EEB431FAB44410080E6CD /* Box.swift in Sources */,
+				D68EEB481FAB44410080E6CD /* EventSource.swift in Sources */,
+				D68EEB471FAB44410080E6CD /* EventEmitter.swift in Sources */,
+				D68EEB461FAB44410080E6CD /* DisposerBag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
