@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D6060A231FBACC8000550164 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6060A221FBACC8000550164 /* Combine.swift */; };
 		D6A8483D1FA996BC0066505A /* ReactiveEmitter_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D6A8484F1FA997710066505A /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848441FA997710066505A /* Box.swift */; };
 		D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848451FA997710066505A /* CompositeDisposer.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D6060A221FBACC8000550164 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		D6A848381FA996BC0066505A /* ReactiveEmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveEmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactiveEmitter_mac.h; sourceTree = "<group>"; };
 		D6A8483C1FA996BC0066505A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				D6A8484C1FA997710066505A /* Map.swift */,
 				D6A8484D1FA997710066505A /* Merge.swift */,
 				D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */,
+				D6060A221FBACC8000550164 /* Combine.swift */,
 			);
 			path = Operator;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				D6A848561FA997710066505A /* Map.swift in Sources */,
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
 				D6BDA8381FAB1B2A00A0AC47 /* Util.swift in Sources */,
+				D6060A231FBACC8000550164 /* Combine.swift in Sources */,
 				D6A8484F1FA997710066505A /* Box.swift in Sources */,
 				D6A848541FA997710066505A /* EventSource.swift in Sources */,
 				D6A848531FA997710066505A /* EventEmitter.swift in Sources */,
