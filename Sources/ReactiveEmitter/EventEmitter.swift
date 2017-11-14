@@ -2,11 +2,11 @@ import Foundation
 
 public class EventEmitter<Event> : EventSourceProtocol {
     public init() {
-        lock = NSLock()
+        queue = DispatchQueue.init(label: "\(type(of: self))")
     }
     
     public func emit(_ event: Event) {
-        let handlers = lock.scope {
+        let handlers = queue.sync {
             self.handlers
         }
 
@@ -15,10 +15,10 @@ public class EventEmitter<Event> : EventSourceProtocol {
         }
     }
     
-    public func subscribe(_ handler: @escaping (Event) -> Void) -> Disposer {
+    public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
         let handlerBox = Box(handler)
         
-        lock.scope {
+        queue.sync {
             handlers.append(handlerBox)
         }
         
@@ -36,7 +36,7 @@ public class EventEmitter<Event> : EventSourceProtocol {
     }
 
     private func unsubscribe(_ box: Box<(Event) -> Void>) {
-        lock.scope {
+        queue.sync {
             while let index = (handlers.index { $0 === box }) {
                 handlers.remove(at: index)
             }
@@ -44,5 +44,5 @@ public class EventEmitter<Event> : EventSourceProtocol {
     }
     
     private var handlers: [Box<(Event) -> Void>] = []
-    private let lock: NSLock
+    private let queue: DispatchQueue
 }

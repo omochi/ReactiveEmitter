@@ -15,11 +15,11 @@ extension DisposerProtocol {
 public class Disposer : DisposerProtocol {
     public init(_ f: (() -> Void)?) {
         self.f = f
-        self.lock = NSLock()
+        self.queue = DispatchQueue.init(label: "\(type(of: self))")
     }
     
     public func dispose() {
-        let f: (() -> Void)? = lock.scope {
+        let f: (() -> Void)? = queue.sync {
             let sf = self.f
             self.f = nil
             return sf
@@ -33,5 +33,5 @@ public class Disposer : DisposerProtocol {
     }
     
     private var f: (() -> Void)?
-    private let lock: NSLock
+    private let queue: DispatchQueue
 }

@@ -2,12 +2,12 @@ import Foundation
 
 public class CompositeDisposer : DisposerProtocol {
     public init() {
-        lock = NSLock()
+        queue = DispatchQueue.init(label: "\(type(of: self))")
     }
     
     public func dispose() {
         while true {
-            let disposer: Disposer? = lock.scope {
+            let disposer: Disposer? = queue.sync {
                 if let d = disposers.first {
                     disposers.removeFirst()
                     return d
@@ -24,7 +24,7 @@ public class CompositeDisposer : DisposerProtocol {
     }
     
     public func add<X: DisposerProtocol>(_ disposer: X) {
-        lock.scope {
+        queue.sync {
             disposers.append(disposer.asDisposer())
         }
     }
@@ -38,5 +38,5 @@ public class CompositeDisposer : DisposerProtocol {
     }
     
     private var disposers: [Disposer] = []
-    private let lock: NSLock
+    private let queue: DispatchQueue
 }

@@ -8,56 +8,47 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
         self.dispatchQueue = dispatchQueue
     }
     
-    public func subscribe(_ handler: @escaping (T) -> Void) -> Disposer {
-        return Sink(source: source,
-                    dispatchQueue: dispatchQueue,
-                    handler: handler).asDisposer()
+    public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
+        let sink = Sink(dispatchQueue: dispatchQueue, handler: handler)
+        sink.addDisposer(source.subscribe { sink.send($0) })
+        return Disposer {
+            sink.dispose()
+        }
     }
     
     private let source: TSource
     private let dispatchQueue: DispatchQueue
     
-    private class Sink : DisposerProtocol {
-        public init(source: TSource,
-                    dispatchQueue: DispatchQueue,
+    private class Sink : SinkBase<T> {
+        public init(dispatchQueue: DispatchQueue,
                     handler: @escaping (T) -> Void)
         {
             self.dispatchQueue = dispatchQueue
-            self.handler = handler
-            self.lock = NSLock()
-            self.disposer = CompositeDisposer()
-            
-            disposer.add(source.subscribe {
-                self.send($0)
-            })
-            disposer.add(Disposer { [weak self] in
-                self?.disposed = true
-            })
+            self.syncQueue = DispatchQueue.init(label: "\(type(of: self))")
+
+            super.init(handler: handler)
         }
-        
+
         public func dispose() {
-            lock.scope {
+            syncQueue.sync {
                 disposed = true
             }
-            
             disposer.dispose()
         }
         
-        private func send(_ t: T) {
+        public func send(_ t: T) {
             dispatchQueue.async {
-                let disposed = self.lock.scope { self.disposed }
+                let disposed = self.syncQueue.sync { self.disposed }
                 if disposed {
                     return
                 }
                 
-                self.handler(t)
+                self.emit(t)
             }
         }
         
         private let dispatchQueue: DispatchQueue
-        private let handler: (T) -> Void
-        private let lock: NSLock
-        private let disposer: CompositeDisposer
+        private let syncQueue: DispatchQueue
         private var disposed: Bool = false
     }
 }

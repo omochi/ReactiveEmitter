@@ -1,7 +1,7 @@
 public protocol EventSourceProtocol {
     associatedtype Event
     
-    func subscribe(_ handler: @escaping (Event) -> Void) -> Disposer
+    func subscribe(handler: @escaping (Event) -> Void) -> Disposer
     
     func asEventSource() -> EventSource<Event>
 }
@@ -19,8 +19,8 @@ public class EventSource<Event> : EventSourceProtocol {
         self.box = _EventSourceBox<X>(base)
     }
     
-    public func subscribe(_ handler: @escaping (Event) -> Void) -> Disposer {
-        return box.subscribe(handler)
+    public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
+        return box.subscribe(handler: handler)
     }
     
     public func asEventSource() -> EventSource<(Event)> {
@@ -31,7 +31,7 @@ public class EventSource<Event> : EventSourceProtocol {
 }
 
 public class _AnyEventSourceBox<Event> {
-    public func subscribe(_ handler: @escaping (Event) -> Void) -> Disposer {
+    public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
         fatalError("abstract")
     }
 }
@@ -43,8 +43,8 @@ public class _EventSourceBox<X: EventSourceProtocol> : _AnyEventSourceBox<X.Even
         self.base = base
     }
     
-    public override func subscribe(_ handler: @escaping (Event) -> Void) -> Disposer {
-        return base.subscribe(handler)
+    public override func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
+        return base.subscribe(handler: handler)
     }
     
     private let base: X

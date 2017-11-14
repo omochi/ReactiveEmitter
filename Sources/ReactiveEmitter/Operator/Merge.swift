@@ -5,35 +5,22 @@ public class EventSourceMerge<TSource: EventSourceProtocol> : EventSourceProtoco
         self.sources = sources
     }
     
-    public func subscribe(_ handler: @escaping (T) -> Void) -> Disposer {
-        return Sink(sources: sources,
-                    handler: handler).asDisposer()
+    public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
+        let sink = Sink(handler: handler)
+        
+        sources.forEach { source in
+            sink.addDisposer(source.subscribe { sink.emit($0) })
+        }
+
+        return sink.disposer
     }
     
     private let sources: [TSource]
     
-    private class Sink : DisposerProtocol {
-        public init(sources: [TSource], handler: @escaping (T) -> Void) {
-            self.handler = handler
-            self.disposer = CompositeDisposer()
-            
-            sources.forEach { source in
-                disposer.add(source.subscribe {
-                    self.send($0)
-                })
-            }
+    private class Sink: SinkBase<T> {
+        public override init(handler: @escaping (T) -> Void) {
+            super.init(handler: handler)
         }
-        
-        public func dispose() {
-            disposer.dispose()
-        }
-        
-        private func send(_ t: T) {
-            handler(t)
-        }
-        
-        private let handler: (T) -> Void
-        private let disposer: CompositeDisposer
     }
 }
 

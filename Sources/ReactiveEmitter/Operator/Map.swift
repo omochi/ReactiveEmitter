@@ -6,41 +6,30 @@ public class EventSourceMap<TSource: EventSourceProtocol, U> : EventSourceProtoc
         self.map = map
     }
     
-    public func subscribe(_ handler: @escaping (U) -> Void) -> Disposer {
-        return Sink(source: source,
-                    map: map,
-                    handler: handler).asDisposer()
+    public func subscribe(handler: @escaping (U) -> Void) -> Disposer {
+        let sink = Sink(map: map, handler: handler)
+        sink.addDisposer(source.subscribe { sink.send($0) })
+        return sink.disposer
     }
     
-    private let source: TSource
-    private let map: (T) -> U
+    let source: TSource
+    let map: (T) -> U
     
-    private class Sink : DisposerProtocol {
-        public init(source: TSource,
-                    map: @escaping (T) -> U,
-                    handler: @escaping (U) -> Void)
+    private class Sink : SinkBase<U> {
+        public init(
+            map: @escaping (T) -> U,
+            handler: @escaping (U) -> Void)
         {
             self.map = map
-            self.handler = handler
-            self.disposer = CompositeDisposer()
-            
-            disposer.add(source.subscribe {
-                self.send($0)
-            })
+            super.init(handler: handler)
         }
         
-        public func dispose() {
-            disposer.dispose()
-        }
-        
-        private func send(_ t: T) {
+        public func send(_ t: T) {
             let u = map(t)
-            handler(u)
+            emit(u)
         }
         
         private let map: (T) -> U
-        private let handler: (U) -> Void
-        private let disposer: CompositeDisposer
     }
 }
 

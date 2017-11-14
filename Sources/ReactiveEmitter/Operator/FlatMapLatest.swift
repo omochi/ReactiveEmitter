@@ -7,47 +7,35 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
         self.flatMap = flatMap
     }
     
-    public func subscribe(_ handler: @escaping (U) -> Void) -> Disposer {
-        return Sink(source: source,
-                    flatMap: flatMap,
-                    handler: handler).asDisposer()
+    public func subscribe(handler: @escaping (U) -> Void) -> Disposer {
+        let sink = Sink(flatMap: flatMap, handler: handler)
+        sink.addDisposer(source.subscribe { sink.send($0) })
+        return sink.disposer
     }
     
     private let source: TSource
     private let flatMap: (T) -> USource
     
-    private class Sink : DisposerProtocol {
-        public init(source: TSource,
-                    flatMap: @escaping (T) -> USource,
+    private class Sink : SinkBase<U> {
+        public init(flatMap: @escaping (T) -> USource,
                     handler: @escaping (U) -> Void)
         {
             self.flatMap = flatMap
-            self.handler = handler
-            self.disposer = CompositeDisposer()
             self.innerDisposer = CompositeDisposer()
             
-            disposer.add(innerDisposer)
-            disposer.add(source.subscribe {
-                self.send($0)
-            })
+            super.init(handler: handler)
+            
+            addDisposer(innerDisposer.asDisposer())
         }
         
-        public func dispose() {
-            disposer.dispose()
-        }
-        
-        private func send(_ t: T) {
+        public func send(_ t: T) {
             innerDisposer.dispose()
             
             let uSource: USource = flatMap(t)
-            innerDisposer.add(uSource.subscribe { [handler] (u: U) in
-                handler(u)
-            })
+            innerDisposer.add(uSource.subscribe { self.emit($0) })
         }
         
         private let flatMap: (T) -> USource
-        private let handler: (U) -> Void
-        private let disposer: CompositeDisposer
         private let innerDisposer: CompositeDisposer
     }
 }
