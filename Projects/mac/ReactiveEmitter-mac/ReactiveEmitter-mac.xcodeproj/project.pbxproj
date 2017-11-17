@@ -26,6 +26,7 @@
 /* Begin PBXFileReference section */
 		D6060A221FBACC8000550164 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		D6060A241FBAD97F00550164 /* SinkBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinkBase.swift; sourceTree = "<group>"; };
+		D679B23C1FBE83CE009601E9 /* Combine.swift.gysb */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Combine.swift.gysb; sourceTree = "<group>"; };
 		D6A848381FA996BC0066505A /* ReactiveEmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveEmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactiveEmitter_mac.h; sourceTree = "<group>"; };
 		D6A8483C1FA996BC0066505A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +104,7 @@
 				D6A8484D1FA997710066505A /* Merge.swift */,
 				D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */,
 				D6060A221FBACC8000550164 /* Combine.swift */,
+				D679B23C1FBE83CE009601E9 /* Combine.swift.gysb */,
 				D6060A241FBAD97F00550164 /* SinkBase.swift */,
 			);
 			path = Operator;

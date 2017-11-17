@@ -1,0 +1,95 @@
+//
+//  Combine.swift.gysb
+//  ReactiveEmitter
+//
+//  Created by omochimetaru on 2017/11/17.
+//  Copyright © 2017年 omochimetaru. All rights reserved.
+//
+
+import Foundation
+%{
+    let ns = [2, 3, 4, 5, 6, 7, 8]
+
+    func sourceType(_ i: Int) -> String { return "T\(i)Source" }
+    func sourceArg(_ i: Int) -> String { return "source\(i): \(sourceType(i))" }
+    func eventType(_ i: Int) -> String { return "T\(i)" }
+}%
+
+% for n in ns {
+public func combine<
+    % for i in 0..<n {
+    ${sourceType(i)}: EventSourceProtocol${ i < n-1 ? ",": "" }
+    % }
+    >(
+    % for i in 0..<n {
+    _ source${i}: ${sourceType(i)}${ i < n-1 ? ",": "" }
+    %}
+    ) -> EventSource<(${ (0..<n).map { sourceType($0) + ".Event" }.joined(separator: ", ") })>
+{
+    return EventSourceCombine${ n }(
+        % for i in 0..<n {
+        source${i}: source${i}${ i < n-1 ? ",": "" }
+        % }
+        ).asEventSource()
+}
+
+% }
+% for n in ns {
+public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separator: ", ") }> : EventSourceProtocol where
+    % for i in 0..<n {
+    ${sourceType(i)}: EventSourceProtocol${ i < n-1 ? ", ": "" }
+    % }
+{
+    % for i in 0..<n {
+    public typealias T${i} = T${i}Source.Event
+    % }
+
+    public init(${ (0..<n).map(sourceArg).joined(separator: ", ") }) {
+        % for i in 0..<n {
+        self.source${i} = source${i}
+        % }
+    }
+    
+    public func subscribe(handler: @escaping ((${ (0..<n).map(eventType).joined(separator: ", ") })) -> Void) -> Disposer {
+        let sink = Sink(handler: handler)
+        % for i in 0..<n {
+        sink.addDisposer(source${i}.subscribe { sink.send${i}($0) })
+        % }
+        return sink.disposer
+    }
+    
+    % for i in 0..<n {
+    private let source${i}: T${i}Source
+    % }
+
+    private class Sink: SinkBase<(${ (0..<n).map(eventType).joined(separator: ", ") })> {
+        public override init(handler: @escaping (${ (0..<n).map(eventType).joined(separator: ", ") }) -> Void) {
+            super.init(handler: handler)
+        }
+        
+        % for i in 0..<n {
+        public func send${i}(_ t${i}: ${eventType(i)}) {
+            self.t${i} = t${i}
+            mayEmit()
+        }
+        % }
+        
+        private func mayEmit() {
+            guard
+            % for i in 0..<n { 
+                let t${i} = t${i}${ i < n-1 ? "," : " else" }
+            % }
+            {
+                return
+            }
+            
+            emit((${ (0..<n).map { "t\($0)" }.joined(separator: ", ") }))
+        }
+        
+        % for i in 0..<n {
+        private var t${i}: ${eventType(i)}?
+        % }
+    }
+}
+
+% }
