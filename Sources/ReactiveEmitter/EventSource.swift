@@ -19,12 +19,16 @@ public class EventSource<Event> : EventSourceProtocol {
         self.box = _EventSourceBox<X>(base)
     }
     
+    public init(_ f: @escaping ((Event) -> Void) -> Disposer) {
+        self.box = _FuncEventSourceBox<Event>(f)
+    }
+    
     public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
         return box.subscribe(handler: handler)
     }
     
     public func asEventSource() -> EventSource<(Event)> {
-        return self;
+        return self
     }
     
     private let box: _AnyEventSourceBox<Event>
@@ -48,4 +52,16 @@ public class _EventSourceBox<X: EventSourceProtocol> : _AnyEventSourceBox<X.Even
     }
     
     private let base: X
+}
+
+public class _FuncEventSourceBox<Event> : _AnyEventSourceBox<Event> {
+    public init(_ f: @escaping ((Event) -> Void) -> Disposer) {
+        self.f = f
+    }
+    
+    public override func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
+        return f(handler)
+    }
+    
+    private let f: ( (Event) -> Void ) -> Disposer
 }

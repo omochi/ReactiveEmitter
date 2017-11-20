@@ -1,5 +1,12 @@
-public class ArrayProperty<T> {
-    public class Value : RangeReplaceableCollectionClass {
+public class ArrayProperty<T> : EventSourceProtocol {
+    public typealias Event = [T]
+    
+    public struct ReplaceEvent {
+        public var range: Range<Int>
+        public var elements: [T]
+    }
+    
+    public class Array : RangeReplaceableCollectionClass {
         public typealias Element = T
         public typealias Index = Int
         public typealias IndexDistance = Int
@@ -8,9 +15,9 @@ public class ArrayProperty<T> {
             self.property = property
         }
         
-        public var array: [T] {
+        public var value: [T] {
             get {
-                return Array<T>(self)
+                return Swift.Array<T>(self)
             }
             set {
                 replaceSubrange(startIndex..<endIndex, with: newValue)
@@ -45,8 +52,7 @@ public class ArrayProperty<T> {
         public func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C)
             where C : Collection, C.Element == Element
         {
-            // TODO: emit edit event
-            property._value.replaceSubrange(subrange, with: newElements)
+            property.replaceSubrange(subrange, with: Swift.Array<T>.init(newElements))
         }
         
         public var description: String {
@@ -58,13 +64,52 @@ public class ArrayProperty<T> {
 
     public init(_ value: [T]) {
         self._value = value
+        valueEmitter = .init()
+        replaceEmitter = .init()
     }
     
-    public var value: Value {
+    //  このプロパティへのアクセスは
+    //  replace event と value event を発生させる
+    public var value: [T] {
         get {
-            return Value.init(property: self)
+            return array.value
+        }
+        set {
+            array.value = newValue
+            valueEmitter.emit(newValue)
         }
     }
     
+    //  このプロパティへのアクセスは replace event のみを発生させる
+    //  value event は発生しない
+    public var array: Array {
+        get {
+            return Array.init(property: self)
+        }
+    }
+    
+    public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
+        let disposer = valueEmitter.subscribe(handler: handler)
+        handler(_value)
+        return disposer
+    }
+    
+    public func subscribeReplace(handler: @escaping (ReplaceEvent) -> Void) -> Disposer {
+        let disposer = replaceEmitter.subscribe(handler: handler)
+        return disposer
+    }
+    
+    public func asReplaceEventSource() -> EventSource<ReplaceEvent> {
+        return replaceEmitter.asEventSource()
+    }
+    
+    private func replaceSubrange(_ range: Range<Int>, with newElements: [T]) {
+        _value.replaceSubrange(range, with: newElements)
+        replaceEmitter.emit(.init(range: range, elements: newElements))
+    }
+    
     private var _value: [T]
+    
+    private let valueEmitter: EventEmitter<[T]>
+    private let replaceEmitter: EventEmitter<ReplaceEvent>
 }

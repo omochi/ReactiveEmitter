@@ -21,6 +21,8 @@
 		D6A848571FA997710066505A /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484D1FA997710066505A /* Merge.swift */; };
 		D6A848581FA997710066505A /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484E1FA997710066505A /* Property.swift */; };
 		D6BDA8361FAB1A6A00A0AC47 /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */; };
+		D6FA869E1FC2711500E3E4E8 /* ArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA869C1FC2711400E3E4E8 /* ArrayProperty.swift */; };
+		D6FA869F1FC2711500E3E4E8 /* RangeReplaceableCollectionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		D6A8484D1FA997710066505A /* Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge.swift; sourceTree = "<group>"; };
 		D6A8484E1FA997710066505A /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveOn.swift; sourceTree = "<group>"; };
+		D6FA869C1FC2711400E3E4E8 /* ArrayProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayProperty.swift; sourceTree = "<group>"; };
+		D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollectionClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,14 +87,16 @@
 		D6A848431FA997710066505A /* ReactiveEmitter */ = {
 			isa = PBXGroup;
 			children = (
+				D6FA869C1FC2711400E3E4E8 /* ArrayProperty.swift */,
+				D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */,
 				D6A848441FA997710066505A /* Box.swift */,
 				D6A848451FA997710066505A /* CompositeDisposer.swift */,
 				D6A848461FA997710066505A /* Disposer.swift */,
 				D6A848471FA997710066505A /* DisposerBag.swift */,
 				D6A848481FA997710066505A /* EventEmitter.swift */,
 				D6A848491FA997710066505A /* EventSource.swift */,
-				D6A8484A1FA997710066505A /* Operator */,
 				D6A8484E1FA997710066505A /* Property.swift */,
+				D6A8484A1FA997710066505A /* Operator */,
 			);
 			name = ReactiveEmitter;
 			path = ../../../Sources/ReactiveEmitter;
@@ -192,9 +198,11 @@
 				D6A848581FA997710066505A /* Property.swift in Sources */,
 				D6A848571FA997710066505A /* Merge.swift in Sources */,
 				D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */,
+				D6FA869F1FC2711500E3E4E8 /* RangeReplaceableCollectionClass.swift in Sources */,
 				D6A848551FA997710066505A /* FlatMapLatest.swift in Sources */,
 				D6BDA8361FAB1A6A00A0AC47 /* ObserveOn.swift in Sources */,
 				D6A848561FA997710066505A /* Map.swift in Sources */,
+				D6FA869E1FC2711500E3E4E8 /* ArrayProperty.swift in Sources */,
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
 				D6060A231FBACC8000550164 /* Combine.swift in Sources */,
 				D6060A251FBAD97F00550164 /* SinkBase.swift in Sources */,
