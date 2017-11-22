@@ -17,7 +17,7 @@ public class EventSourceNever<T> : EventSourceProtocol {
 }
 
 extension EventSource {
-    public static func never<T>() -> EventSource<T> {
-        return EventSourceNever<T>.init().asEventSource()
+    public static func never() -> EventSource<Event> {
+        return EventSourceNever<Event>.init().asEventSource()
     }
 }

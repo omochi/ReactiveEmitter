@@ -41,7 +41,7 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
 }
 
 extension EventSourceProtocol {
-    public func flatMap<USource: EventSourceProtocol>(_ flatMap: @escaping (Event) -> USource) -> EventSource<USource.Event> {
+    public func flatMapLatest<USource: EventSourceProtocol>(_ flatMap: @escaping (Event) -> USource) -> EventSource<USource.Event> {
         return EventSourceFlatMapLatest(source: self, flatMap: flatMap).asEventSource()
     }
 }
