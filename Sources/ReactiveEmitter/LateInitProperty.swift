@@ -1,22 +1,27 @@
-public class Property<Value> : EventSourceProtocol, EventSinkConvertible {
-    public init(_ value: Value) {
-        self._value = value
+public class LateInitProperty<Value> : EventSourceProtocol, EventSinkConvertible {
+    public init () {
+        self._value = nil
         self.emitter = EventEmitter<Value>()
     }
     
     public var value: Value {
         get {
-            return _value
+            guard let value = _value else {
+                fatalError("value still not inited")
+            }
+            return value
         }
         set {
             _value = newValue
-            emitter.emit(_value)
+            emitter.emit(newValue)
         }
     }
     
     public func subscribe(handler: @escaping (Value) -> Void) -> Disposer {
         let disposer = emitter.subscribe(handler: handler)
-        handler(_value)
+        if let value = _value {
+            handler(value)
+        }
         return disposer
     }
     
@@ -25,7 +30,7 @@ public class Property<Value> : EventSourceProtocol, EventSinkConvertible {
     }
     
     private class Sink<Value> : EventSinkProtocol {
-        public init(_ base: Property<Value>) {
+        public init(_ base: LateInitProperty<Value>) {
             self.property = base
         }
         
@@ -33,9 +38,9 @@ public class Property<Value> : EventSourceProtocol, EventSinkConvertible {
             property.value = event
         }
         
-        private let property: Property<Value>
+        private let property: LateInitProperty<Value>
     }
     
-    private var _value: Value
+    private var _value: Value?
     private let emitter: EventEmitter<Value>
 }

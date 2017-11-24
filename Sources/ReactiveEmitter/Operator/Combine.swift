@@ -191,7 +191,7 @@ public class EventSourceCombine2<T0Source, T1Source> : EventSourceProtocol where
     private let source0: T0Source
     private let source1: T1Source
 
-    private class Sink: SinkBase<(T0, T1)> {
+    private class Sink: OperatorSinkBase<(T0, T1)> {
         public override init(handler: @escaping (T0, T1) -> Void) {
             super.init(handler: handler)
         }
@@ -213,7 +213,7 @@ public class EventSourceCombine2<T0Source, T1Source> : EventSourceProtocol where
                 return
             }
             
-            emit((t0, t1))
+            emit(event: (t0, t1))
         }
         
         private var t0: T0?
@@ -248,7 +248,7 @@ public class EventSourceCombine3<T0Source, T1Source, T2Source> : EventSourceProt
     private let source1: T1Source
     private let source2: T2Source
 
-    private class Sink: SinkBase<(T0, T1, T2)> {
+    private class Sink: OperatorSinkBase<(T0, T1, T2)> {
         public override init(handler: @escaping (T0, T1, T2) -> Void) {
             super.init(handler: handler)
         }
@@ -275,7 +275,7 @@ public class EventSourceCombine3<T0Source, T1Source, T2Source> : EventSourceProt
                 return
             }
             
-            emit((t0, t1, t2))
+            emit(event: (t0, t1, t2))
         }
         
         private var t0: T0?
@@ -316,7 +316,7 @@ public class EventSourceCombine4<T0Source, T1Source, T2Source, T3Source> : Event
     private let source2: T2Source
     private let source3: T3Source
 
-    private class Sink: SinkBase<(T0, T1, T2, T3)> {
+    private class Sink: OperatorSinkBase<(T0, T1, T2, T3)> {
         public override init(handler: @escaping (T0, T1, T2, T3) -> Void) {
             super.init(handler: handler)
         }
@@ -348,7 +348,7 @@ public class EventSourceCombine4<T0Source, T1Source, T2Source, T3Source> : Event
                 return
             }
             
-            emit((t0, t1, t2, t3))
+            emit(event: (t0, t1, t2, t3))
         }
         
         private var t0: T0?
@@ -395,7 +395,7 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source3: T3Source
     private let source4: T4Source
 
-    private class Sink: SinkBase<(T0, T1, T2, T3, T4)> {
+    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4)> {
         public override init(handler: @escaping (T0, T1, T2, T3, T4) -> Void) {
             super.init(handler: handler)
         }
@@ -432,7 +432,7 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit((t0, t1, t2, t3, t4))
+            emit(event: (t0, t1, t2, t3, t4))
         }
         
         private var t0: T0?
@@ -485,7 +485,7 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source4: T4Source
     private let source5: T5Source
 
-    private class Sink: SinkBase<(T0, T1, T2, T3, T4, T5)> {
+    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4, T5)> {
         public override init(handler: @escaping (T0, T1, T2, T3, T4, T5) -> Void) {
             super.init(handler: handler)
         }
@@ -527,7 +527,7 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit((t0, t1, t2, t3, t4, t5))
+            emit(event: (t0, t1, t2, t3, t4, t5))
         }
         
         private var t0: T0?
@@ -586,7 +586,7 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source5: T5Source
     private let source6: T6Source
 
-    private class Sink: SinkBase<(T0, T1, T2, T3, T4, T5, T6)> {
+    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4, T5, T6)> {
         public override init(handler: @escaping (T0, T1, T2, T3, T4, T5, T6) -> Void) {
             super.init(handler: handler)
         }
@@ -633,7 +633,7 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit((t0, t1, t2, t3, t4, t5, t6))
+            emit(event: (t0, t1, t2, t3, t4, t5, t6))
         }
         
         private var t0: T0?
@@ -698,7 +698,7 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source6: T6Source
     private let source7: T7Source
 
-    private class Sink: SinkBase<(T0, T1, T2, T3, T4, T5, T6, T7)> {
+    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4, T5, T6, T7)> {
         public override init(handler: @escaping (T0, T1, T2, T3, T4, T5, T6, T7) -> Void) {
             super.init(handler: handler)
         }
@@ -750,7 +750,7 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit((t0, t1, t2, t3, t4, t5, t6, t7))
+            emit(event: (t0, t1, t2, t3, t4, t5, t6, t7))
         }
         
         private var t0: T0?

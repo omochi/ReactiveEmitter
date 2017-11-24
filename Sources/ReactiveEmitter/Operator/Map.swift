@@ -8,14 +8,14 @@ public class EventSourceMap<TSource: EventSourceProtocol, U> : EventSourceProtoc
     
     public func subscribe(handler: @escaping (U) -> Void) -> Disposer {
         let sink = Sink(map: map, handler: handler)
-        sink.addDisposer(source.subscribe { sink.send($0) })
+        sink.addDisposer(source.bind(to: sink))
         return sink.disposer
     }
     
     let source: TSource
     let map: (T) -> U
     
-    private class Sink : SinkBase<U> {
+    private class Sink : OperatorSinkBase<U>, EventSinkProtocol {
         public init(
             map: @escaping (T) -> U,
             handler: @escaping (U) -> Void)
@@ -24,9 +24,9 @@ public class EventSourceMap<TSource: EventSourceProtocol, U> : EventSourceProtoc
             super.init(handler: handler)
         }
         
-        public func send(_ t: T) {
+        public func send(event t: T) {
             let u = map(t)
-            emit(u)
+            emit(event: u)
         }
         
         private let map: (T) -> U

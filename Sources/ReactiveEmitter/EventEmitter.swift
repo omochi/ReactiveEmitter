@@ -1,6 +1,6 @@
 import Foundation
 
-public class EventEmitter<Event> : EventSourceProtocol {
+public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
     public init() {
         queue = DispatchQueue.init(label: "\(type(of: self))")
     }
@@ -33,6 +33,22 @@ public class EventEmitter<Event> : EventSourceProtocol {
             }
             sself.unsubscribe(handlerBox)
         }
+    }
+    
+    public func asEventSink() -> EventSink<(Event)> {
+        return Sink(self).asEventSink()
+    }
+    
+    private class Sink<Event> : EventSinkProtocol {
+        public init(_ base: EventEmitter<Event>) {
+            self.emitter = base
+        }
+        
+        public func send(event: Event) {
+            emitter.emit(event)
+        }
+        
+        private let emitter: EventEmitter<Event>
     }
 
     private func unsubscribe(_ box: Box<(Event) -> Void>) {

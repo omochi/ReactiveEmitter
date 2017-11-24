@@ -9,14 +9,14 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
     
     public func subscribe(handler: @escaping (U) -> Void) -> Disposer {
         let sink = Sink(flatMap: flatMap, handler: handler)
-        sink.addDisposer(source.subscribe { sink.send($0) })
+        sink.addDisposer(source.bind(to: sink))
         return sink.disposer
     }
     
     private let source: TSource
     private let flatMap: (T) -> USource
     
-    private class Sink : SinkBase<U> {
+    private class Sink : OperatorSinkBase<U>, EventSinkProtocol {
         public init(flatMap: @escaping (T) -> USource,
                     handler: @escaping (U) -> Void)
         {
@@ -28,11 +28,11 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
             addDisposer(innerDisposer.asDisposer())
         }
         
-        public func send(_ t: T) {
+        public func send(event t: T) {
             innerDisposer.dispose()
             
             let uSource: USource = flatMap(t)
-            innerDisposer.add(uSource.subscribe { self.emit($0) })
+            innerDisposer.add(uSource.subscribe { self.emit(event: $0) })
         }
         
         private let flatMap: (T) -> USource

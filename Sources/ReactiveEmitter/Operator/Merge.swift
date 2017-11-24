@@ -7,19 +7,21 @@ public class EventSourceMerge<TSource: EventSourceProtocol> : EventSourceProtoco
     
     public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        
         sources.forEach { source in
-            sink.addDisposer(source.subscribe { sink.emit($0) })
+            sink.addDisposer(source.bind(to: sink))
         }
-
         return sink.disposer
     }
     
     private let sources: [TSource]
     
-    private class Sink: SinkBase<T> {
+    private class Sink: OperatorSinkBase<T>, EventSinkProtocol {
         public override init(handler: @escaping (T) -> Void) {
             super.init(handler: handler)
+        }
+        
+        public func send(event t: T) {
+            emit(event: t)
         }
     }
 }

@@ -62,7 +62,7 @@ public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separato
     private let source${i}: T${i}Source
     % }
 
-    private class Sink: SinkBase<(${ (0..<n).map(eventType).joined(separator: ", ") })> {
+    private class Sink: OperatorSinkBase<(${ (0..<n).map(eventType).joined(separator: ", ") })> {
         public override init(handler: @escaping (${ (0..<n).map(eventType).joined(separator: ", ") }) -> Void) {
             super.init(handler: handler)
         }
@@ -83,7 +83,7 @@ public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separato
                 return
             }
             
-            emit((${ (0..<n).map { "t\($0)" }.joined(separator: ", ") }))
+            emit(event: (${ (0..<n).map { "t\($0)" }.joined(separator: ", ") }))
         }
         
         % for i in 0..<n {
