@@ -68,20 +68,15 @@ public class ArrayProperty<T> : EventSourceProtocol {
         replaceEmitter = .init()
     }
     
-    //  このプロパティへのアクセスは
-    //  replace event と value event を発生させる
     public var value: [T] {
         get {
             return array.value
         }
         set {
             array.value = newValue
-            valueEmitter.emit(newValue)
         }
     }
     
-    //  このプロパティへのアクセスは replace event のみを発生させる
-    //  value event は発生しない
     public var array: Array {
         get {
             return Array.init(property: self)
@@ -106,6 +101,7 @@ public class ArrayProperty<T> : EventSourceProtocol {
     private func replaceSubrange(_ range: Range<Int>, with newElements: [T]) {
         _value.replaceSubrange(range, with: newElements)
         replaceEmitter.emit(.init(range: range, elements: newElements))
+        valueEmitter.emit(_value)
     }
     
     private var _value: [T]
