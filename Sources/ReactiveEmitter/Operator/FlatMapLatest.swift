@@ -21,22 +21,27 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
                     handler: @escaping (U) -> Void)
         {
             self.flatMap = flatMap
-            self.innerDisposer = CompositeDisposer()
             
             super.init(handler: handler)
             
-            addDisposer(innerDisposer.asDisposer())
+            weak var wself = self
+            
+            addDisposer(Disposer {
+                wself?.innerDisposer?.dispose()
+            })
         }
         
         public func send(event t: T) {
-            innerDisposer.dispose()
+            innerDisposer?.dispose()
+            innerDisposer = nil
             
             let uSource: USource = flatMap(t)
-            innerDisposer.add(uSource.subscribe { self.emit(event: $0) })
+            innerDisposer = CompositeDisposer.init()
+            innerDisposer!.add(uSource.subscribe { self.emit(event: $0) })
         }
         
         private let flatMap: (T) -> USource
-        private let innerDisposer: CompositeDisposer
+        private var innerDisposer: CompositeDisposer?
     }
 }
 

@@ -9,6 +9,4 @@ class ArrayPropertyTests: XCTestCase {
             print($0)
         }
     }
-
-
 }
