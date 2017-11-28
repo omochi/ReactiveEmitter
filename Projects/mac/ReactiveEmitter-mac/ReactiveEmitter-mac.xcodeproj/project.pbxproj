@@ -23,6 +23,9 @@
 		D6AA0A311FCBA1EB00F382CD /* WeakProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A301FCBA1EB00F382CD /* WeakProperty.swift */; };
 		D6AA0A331FCBA23400F382CD /* WeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A321FCBA23400F382CD /* WeakBox.swift */; };
 		D6AA0A3B1FCC025900F382CD /* SubscribeOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A3A1FCC025900F382CD /* SubscribeOnce.swift */; };
+		D6AA0A3F1FCCF89A00F382CD /* ZipArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A3E1FCCF89A00F382CD /* ZipArray.swift */; };
+		D6AA0A411FCD074100F382CD /* ValueOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A401FCD074100F382CD /* ValueOf.swift */; };
+		D6AA0A461FCD11DA00F382CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A451FCD11DA00F382CD /* Sequence.swift */; };
 		D6BD53671FC5762900D2DD5E /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD53661FC5762900D2DD5E /* Never.swift */; };
 		D6BD537A1FC82BBE00D2DD5E /* EventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD53791FC82BBE00D2DD5E /* EventSink.swift */; };
 		D6BD537C1FC8318F00D2DD5E /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD537B1FC8318F00D2DD5E /* Bind.swift */; };
@@ -52,6 +55,9 @@
 		D6AA0A301FCBA1EB00F382CD /* WeakProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakProperty.swift; sourceTree = "<group>"; };
 		D6AA0A321FCBA23400F382CD /* WeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakBox.swift; sourceTree = "<group>"; };
 		D6AA0A3A1FCC025900F382CD /* SubscribeOnce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeOnce.swift; sourceTree = "<group>"; };
+		D6AA0A3E1FCCF89A00F382CD /* ZipArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipArray.swift; sourceTree = "<group>"; };
+		D6AA0A401FCD074100F382CD /* ValueOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueOf.swift; sourceTree = "<group>"; };
+		D6AA0A451FCD11DA00F382CD /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		D6BD53661FC5762900D2DD5E /* Never.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
 		D6BD53791FC82BBE00D2DD5E /* EventSink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSink.swift; sourceTree = "<group>"; };
 		D6BD537B1FC8318F00D2DD5E /* Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bind.swift; sourceTree = "<group>"; };
@@ -101,19 +107,11 @@
 		D6A848431FA997710066505A /* ReactiveEmitter */ = {
 			isa = PBXGroup;
 			children = (
+				D6AA0A441FCD0EA000F382CD /* Util */,
+				D6AA0A431FCD0E9400F382CD /* Disposer */,
+				D6AA0A421FCD0E8900F382CD /* Type */,
 				D6AA0A2F1FCBA19900F382CD /* EventSource */,
-				D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */,
-				D6A848441FA997710066505A /* Box.swift */,
-				D6A848451FA997710066505A /* CompositeDisposer.swift */,
-				D6A848461FA997710066505A /* Disposer.swift */,
-				D6A848471FA997710066505A /* DisposerBag.swift */,
-				D6A848491FA997710066505A /* EventSource.swift */,
-				D6BD53791FC82BBE00D2DD5E /* EventSink.swift */,
 				D6A8484A1FA997710066505A /* Operator */,
-				D6BD53661FC5762900D2DD5E /* Never.swift */,
-				D6BD537B1FC8318F00D2DD5E /* Bind.swift */,
-				D6AA0A321FCBA23400F382CD /* WeakBox.swift */,
-				D6AA0A3A1FCC025900F382CD /* SubscribeOnce.swift */,
 			);
 			name = ReactiveEmitter;
 			path = ../../../Sources/ReactiveEmitter;
@@ -122,6 +120,10 @@
 		D6A8484A1FA997710066505A /* Operator */ = {
 			isa = PBXGroup;
 			children = (
+				D6BD53661FC5762900D2DD5E /* Never.swift */,
+				D6BD537B1FC8318F00D2DD5E /* Bind.swift */,
+				D6AA0A3A1FCC025900F382CD /* SubscribeOnce.swift */,
+				D6AA0A401FCD074100F382CD /* ValueOf.swift */,
 				D6A8484B1FA997710066505A /* FlatMapLatest.swift */,
 				D6A8484C1FA997710066505A /* Map.swift */,
 				D6A8484D1FA997710066505A /* Merge.swift */,
@@ -129,6 +131,8 @@
 				D6060A221FBACC8000550164 /* Combine.swift */,
 				D679B23C1FBE83CE009601E9 /* Combine.swift.gysb */,
 				D6060A241FBAD97F00550164 /* OperatorSinkBase.swift */,
+				D6AA0A3E1FCCF89A00F382CD /* ZipArray.swift */,
+				D6AA0A451FCD11DA00F382CD /* Sequence.swift */,
 			);
 			path = Operator;
 			sourceTree = "<group>";
@@ -143,6 +147,35 @@
 				D6AA0A301FCBA1EB00F382CD /* WeakProperty.swift */,
 			);
 			path = EventSource;
+			sourceTree = "<group>";
+		};
+		D6AA0A421FCD0E8900F382CD /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				D6A848461FA997710066505A /* Disposer.swift */,
+				D6A848491FA997710066505A /* EventSource.swift */,
+				D6BD53791FC82BBE00D2DD5E /* EventSink.swift */,
+				D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */,
+			);
+			path = Type;
+			sourceTree = "<group>";
+		};
+		D6AA0A431FCD0E9400F382CD /* Disposer */ = {
+			isa = PBXGroup;
+			children = (
+				D6A848451FA997710066505A /* CompositeDisposer.swift */,
+				D6A848471FA997710066505A /* DisposerBag.swift */,
+			);
+			path = Disposer;
+			sourceTree = "<group>";
+		};
+		D6AA0A441FCD0EA000F382CD /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D6A848441FA997710066505A /* Box.swift */,
+				D6AA0A321FCBA23400F382CD /* WeakBox.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,11 +269,14 @@
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
 				D6AA0A311FCBA1EB00F382CD /* WeakProperty.swift in Sources */,
 				D6060A231FBACC8000550164 /* Combine.swift in Sources */,
+				D6AA0A3F1FCCF89A00F382CD /* ZipArray.swift in Sources */,
+				D6AA0A461FCD11DA00F382CD /* Sequence.swift in Sources */,
 				D6BD537E1FC8375600D2DD5E /* LateInitProperty.swift in Sources */,
 				D6060A251FBAD97F00550164 /* OperatorSinkBase.swift in Sources */,
 				D6A8484F1FA997710066505A /* Box.swift in Sources */,
 				D6A848541FA997710066505A /* EventSource.swift in Sources */,
 				D6A848531FA997710066505A /* EventEmitter.swift in Sources */,
+				D6AA0A411FCD074100F382CD /* ValueOf.swift in Sources */,
 				D6BD537A1FC82BBE00D2DD5E /* EventSink.swift in Sources */,
 				D6BD537C1FC8318F00D2DD5E /* Bind.swift in Sources */,
 				D6A848521FA997710066505A /* DisposerBag.swift in Sources */,

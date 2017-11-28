@@ -1,3 +1,9 @@
+extension EventSourceProtocol {
+    public func map<U>(_ map: @escaping (Event) -> U) -> EventSource<U> {
+        return EventSourceMap(source: self, map: map).asEventSource()
+    }
+}
+
 public class EventSourceMap<TSource: EventSourceProtocol, U> : EventSourceProtocol {
     public typealias T = TSource.Event
 
@@ -30,11 +36,5 @@ public class EventSourceMap<TSource: EventSourceProtocol, U> : EventSourceProtoc
         }
         
         private let map: (T) -> U
-    }
-}
-
-extension EventSourceProtocol {
-    public func map<U>(_ map: @escaping (Event) -> U) -> EventSource<U> {
-        return EventSourceMap(source: self, map: map).asEventSource()
     }
 }

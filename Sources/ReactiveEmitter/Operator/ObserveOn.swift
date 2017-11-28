@@ -1,5 +1,11 @@
 import Foundation
 
+extension EventSourceProtocol {
+    public func observeOn(dispatchQueue: DispatchQueue) -> EventSource<Event> {
+        return EventSourceObserveOn(source: self, dispatchQueue: dispatchQueue).asEventSource()
+    }
+}
+
 public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourceProtocol {
     public typealias T = TSource.Event
     
@@ -50,11 +56,5 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
         private let dispatchQueue: DispatchQueue
         private let syncQueue: DispatchQueue
         private var disposed: Bool = false
-    }
-}
-
-extension EventSourceProtocol {
-    public func observeOn(dispatchQueue: DispatchQueue) -> EventSource<Event> {
-        return EventSourceObserveOn(source: self, dispatchQueue: dispatchQueue).asEventSource()
     }
 }

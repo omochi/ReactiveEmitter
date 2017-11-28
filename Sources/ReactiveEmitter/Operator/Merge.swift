@@ -1,3 +1,7 @@
+public func merge<TSource: EventSourceProtocol>(_ sources: [TSource]) -> EventSource<TSource.Event> {
+    return EventSourceMerge(sources: sources).asEventSource()
+}
+
 public class EventSourceMerge<TSource: EventSourceProtocol> : EventSourceProtocol {
     public typealias T = TSource.Event
     
@@ -24,8 +28,4 @@ public class EventSourceMerge<TSource: EventSourceProtocol> : EventSourceProtoco
             emit(event: t)
         }
     }
-}
-
-public func merge<TSource: EventSourceProtocol>(_ sources: [TSource]) -> EventSource<TSource.Event> {
-    return EventSourceMerge(sources: sources).asEventSource()
 }
