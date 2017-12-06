@@ -5,7 +5,7 @@ public protocol EventSinkConvertible {
 }
 
 public protocol EventSinkProtocol : EventSinkConvertible {
-    associatedtype Event
+    associatedtype Event = _Event
 
     func send(event: Event)
 }
@@ -16,8 +16,8 @@ extension EventSinkProtocol {
     }
 }
 
-public class EventSink<Event> : EventSinkProtocol {
-//    public typealias Event = E
+public class EventSink<E> : EventSinkProtocol {
+    public typealias Event = E
     
     public init<X: EventSinkProtocol>(_ base: X)
         where X.Event == Event
@@ -31,6 +31,10 @@ public class EventSink<Event> : EventSinkProtocol {
     
     public func send(event: Event) {
         box.send(event: event)
+    }
+    
+    public func asEventSink() -> EventSink<E> {
+        return self
     }
     
     private let box: _AnyEventSinkBox<Event>
