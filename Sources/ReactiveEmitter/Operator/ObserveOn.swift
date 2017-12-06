@@ -17,9 +17,7 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
     public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
         let sink = Sink(dispatchQueue: dispatchQueue, handler: handler)
         sink.addDisposer(source.bind(to: sink))
-        return Disposer {
-            sink.dispose()
-        }
+        return sink.disposer
     }
     
     private let source: TSource
@@ -30,27 +28,31 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
                     handler: @escaping (T) -> Void)
         {
             self.dispatchQueue = dispatchQueue
-            self.syncQueue = DispatchQueue.init(label: "\(type(of: self))")
+            self.syncQueue = DispatchQueue.init(label: "\(type(of: self)).syncQueue")
 
             super.init(handler: handler)
         }
 
         public func dispose() {
-            syncQueue.sync {
-                disposed = true
+            syncQueue.async {
+                self.disposed = true
             }
+            
             disposer.dispose()
         }
         
         public func send(event t: T) {
             dispatchQueue.async {
-                let disposed = self.syncQueue.sync { self.disposed }
-                if disposed {
-                    return
-                }
-                
-                self.emit(event: t)
+                self._send(event: t)
             }
+        }
+        
+        private func _send(event t: T) {
+            if (self.syncQueue.sync { self.disposed }) {
+                return
+            }
+            
+            self.emit(event: t)
         }
         
         private let dispatchQueue: DispatchQueue
