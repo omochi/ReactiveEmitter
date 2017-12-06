@@ -1,37 +1,43 @@
-import Foundation
-
-public protocol DisposerProtocol {
-    func dispose()
-    
-    func asDisposer() -> Disposer
-}
-
-extension DisposerProtocol {
-    public func asDisposer() -> Disposer {
-        return Disposer { self.dispose() }
-    }
-}
-
 public class Disposer : DisposerProtocol {
-    public init(_ f: (() -> Void)?) {
-        self.f = f
-        self.queue = DispatchQueue.init(label: "\(type(of: self))")
+    public init<X: DisposerProtocol>(_ base: X) {
+        self.box = _DisposerBox<X>(base)
     }
     
     public func dispose() {
-        let f: (() -> Void)? = queue.sync {
-            let sf = self.f
-            self.f = nil
-            return sf
-        }
-    
-        f?()
+        box.dispose()
     }
     
     public func asDisposer() -> Disposer {
         return self
     }
     
-    private var f: (() -> Void)?
-    private let queue: DispatchQueue
+    private let box: _AnyDisposerBox
+}
+
+extension Disposer {
+    public convenience init() {
+        self.init(NopDisposer.init())
+    }
+    
+    public convenience init(_ f: @escaping () -> Void) {
+        self.init(FuncDisposer.init(f))
+    }
+}
+
+public class _AnyDisposerBox {
+    public func dispose() {
+        fatalError("abstract")
+    }
+}
+
+public class _DisposerBox<X: DisposerProtocol> : _AnyDisposerBox {
+    public init(_ base: X) {
+        self.base = base
+    }
+    
+    public override func dispose() {
+        base.dispose()
+    }
+    
+    private let base: X
 }

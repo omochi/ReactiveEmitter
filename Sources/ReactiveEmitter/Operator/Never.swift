@@ -12,7 +12,7 @@ public class EventSourceNever<T> : EventSourceProtocol {
     public typealias Event = T
     
     public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
-        return Disposer {}
+        return Disposer.init()
     }
 }
 

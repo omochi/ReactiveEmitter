@@ -12,7 +12,7 @@ public class OperatorSinkBase<U> {
         handler(event)
     }
     
-    public func addDisposer(_ disposer: Disposer) {
+    public func addDisposer<X: DisposerProtocol>(_ disposer: X) {
         _disposer.add(disposer)
     }
     

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		D6060A231FBACC8000550164 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6060A221FBACC8000550164 /* Combine.swift */; };
 		D6060A251FBAD97F00550164 /* OperatorSinkBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6060A241FBAD97F00550164 /* OperatorSinkBase.swift */; };
+		D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */; };
+		D664673B1FD7A31C001DBAD7 /* DisposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */; };
+		D664673D1FD7A4C8001DBAD7 /* NopDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */; };
 		D6A8483D1FA996BC0066505A /* ReactiveEmitter_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D6A8484F1FA997710066505A /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848441FA997710066505A /* Box.swift */; };
 		D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848451FA997710066505A /* CompositeDisposer.swift */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		D6060A221FBACC8000550164 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		D6060A241FBAD97F00550164 /* OperatorSinkBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorSinkBase.swift; sourceTree = "<group>"; };
+		D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncDisposer.swift; sourceTree = "<group>"; };
+		D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposerProtocol.swift; sourceTree = "<group>"; };
+		D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NopDisposer.swift; sourceTree = "<group>"; };
 		D679B23C1FBE83CE009601E9 /* Combine.swift.gysb */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Combine.swift.gysb; sourceTree = "<group>"; };
 		D6A848381FA996BC0066505A /* ReactiveEmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveEmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactiveEmitter_mac.h; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 		D6AA0A421FCD0E8900F382CD /* Type */ = {
 			isa = PBXGroup;
 			children = (
+				D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */,
 				D6A848461FA997710066505A /* Disposer.swift */,
 				D6A848491FA997710066505A /* EventSource.swift */,
 				D6BD53791FC82BBE00D2DD5E /* EventSink.swift */,
@@ -163,8 +170,10 @@
 		D6AA0A431FCD0E9400F382CD /* Disposer */ = {
 			isa = PBXGroup;
 			children = (
-				D6A848451FA997710066505A /* CompositeDisposer.swift */,
 				D6A848471FA997710066505A /* DisposerBag.swift */,
+				D6A848451FA997710066505A /* CompositeDisposer.swift */,
+				D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */,
+				D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */,
 			);
 			path = Disposer;
 			sourceTree = "<group>";
@@ -267,6 +276,7 @@
 				D6A848561FA997710066505A /* Map.swift in Sources */,
 				D6FA869E1FC2711500E3E4E8 /* ArrayProperty.swift in Sources */,
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
+				D664673D1FD7A4C8001DBAD7 /* NopDisposer.swift in Sources */,
 				D6AA0A311FCBA1EB00F382CD /* WeakProperty.swift in Sources */,
 				D6060A231FBACC8000550164 /* Combine.swift in Sources */,
 				D6AA0A3F1FCCF89A00F382CD /* ZipArray.swift in Sources */,
@@ -275,11 +285,13 @@
 				D6060A251FBAD97F00550164 /* OperatorSinkBase.swift in Sources */,
 				D6A8484F1FA997710066505A /* Box.swift in Sources */,
 				D6A848541FA997710066505A /* EventSource.swift in Sources */,
+				D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */,
 				D6A848531FA997710066505A /* EventEmitter.swift in Sources */,
 				D6AA0A411FCD074100F382CD /* ValueOf.swift in Sources */,
 				D6BD537A1FC82BBE00D2DD5E /* EventSink.swift in Sources */,
 				D6BD537C1FC8318F00D2DD5E /* Bind.swift in Sources */,
 				D6A848521FA997710066505A /* DisposerBag.swift in Sources */,
+				D664673B1FD7A31C001DBAD7 /* DisposerProtocol.swift in Sources */,
 				D6AA0A331FCBA23400F382CD /* WeakBox.swift in Sources */,
 				D6AA0A3B1FCC025900F382CD /* SubscribeOnce.swift in Sources */,
 			);

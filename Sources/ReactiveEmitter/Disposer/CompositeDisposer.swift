@@ -6,39 +6,23 @@ public class CompositeDisposer : DisposerProtocol {
     }
     
     public func dispose() {
-        while true {
-            let disposer: Disposer? = queue.sync {
-                if let d = disposers.first {
-                    disposers.removeFirst()
-                    return d
-                }
-                return nil
-            }
-            
-            guard let d = disposer else {
-                break
-            }
-            
-            d.dispose()
+        while let disposer = self.popDisposer() {
+            disposer.dispose()
         }
         
-        queue.sync {
-            disposed = true
+        queue.async {
+            self.disposed = true
         }
     }
     
     public func add<X: DisposerProtocol>(_ disposer: X) {
-        let dispose: Bool = queue.sync {
-            if disposed {
-                return true
-            }
-
-            disposers.append(disposer.asDisposer())
-            return false
-        }
-        
-        if dispose {
+        if (queue.sync { disposed }) {
             disposer.dispose()
+            return
+        }
+
+        queue.async {
+            self.disposers.append(disposer.asDisposer())
         }
     }
     
@@ -47,6 +31,16 @@ public class CompositeDisposer : DisposerProtocol {
     {
         disposers.forEach { d in
             add(d)
+        }
+    }
+    
+    private func popDisposer() -> Disposer? {
+        return queue.sync {
+            guard let d = disposers.first else {
+                return nil
+            }
+            disposers.removeFirst()
+            return d
         }
     }
     
