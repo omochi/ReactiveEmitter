@@ -21,7 +21,7 @@ public class EventSourceMap<TSource: EventSourceProtocol, U> : EventSourceProtoc
     let source: TSource
     let map: (T) -> U
     
-    private class Sink : OperatorSinkBase<U>, EventSinkProtocol {
+    private class Sink : OperatorSinkBase<U>, EventSinkProtocol {        
         public init(
             map: @escaping (T) -> U,
             handler: @escaping (U) -> Void)

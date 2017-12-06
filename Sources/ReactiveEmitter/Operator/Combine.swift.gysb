@@ -63,7 +63,7 @@ public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separato
     % }
 
     private class Sink: OperatorSinkBase<(${ (0..<n).map(eventType).joined(separator: ", ") })> {
-        public override init(handler: @escaping (${ (0..<n).map(eventType).joined(separator: ", ") }) -> Void) {
+        public override init(handler: @escaping ((${ (0..<n).map(eventType).joined(separator: ", ") })) -> Void) {
             super.init(handler: handler)
         }
         
