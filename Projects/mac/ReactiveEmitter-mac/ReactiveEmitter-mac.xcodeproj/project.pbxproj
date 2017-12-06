@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D6060A231FBACC8000550164 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6060A221FBACC8000550164 /* Combine.swift */; };
 		D6060A251FBAD97F00550164 /* OperatorSinkBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6060A241FBAD97F00550164 /* OperatorSinkBase.swift */; };
+		D60D7EB31FD7EB6F008020AF /* FactoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60D7EB21FD7EB6F008020AF /* FactoryInit.swift */; };
 		D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */; };
 		D664673B1FD7A31C001DBAD7 /* DisposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */; };
 		D664673D1FD7A4C8001DBAD7 /* NopDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		D6060A221FBACC8000550164 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		D6060A241FBAD97F00550164 /* OperatorSinkBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorSinkBase.swift; sourceTree = "<group>"; };
+		D60D7EB21FD7EB6F008020AF /* FactoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryInit.swift; sourceTree = "<group>"; };
 		D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncDisposer.swift; sourceTree = "<group>"; };
 		D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposerProtocol.swift; sourceTree = "<group>"; };
 		D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NopDisposer.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				D6A848441FA997710066505A /* Box.swift */,
 				D6AA0A321FCBA23400F382CD /* WeakBox.swift */,
+				D60D7EB21FD7EB6F008020AF /* FactoryInit.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				D6AA0A461FCD11DA00F382CD /* Sequence.swift in Sources */,
 				D6BD537E1FC8375600D2DD5E /* LateInitProperty.swift in Sources */,
 				D6060A251FBAD97F00550164 /* OperatorSinkBase.swift in Sources */,
+				D60D7EB31FD7EB6F008020AF /* FactoryInit.swift in Sources */,
 				D6A8484F1FA997710066505A /* Box.swift in Sources */,
 				D6A848541FA997710066505A /* EventSource.swift in Sources */,
 				D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */,

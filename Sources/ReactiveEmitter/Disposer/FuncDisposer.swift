@@ -1,9 +1,10 @@
-public class FuncDisposer : DisposerProtocol {
-    public init(_ f: @escaping () -> Void) {
-        self.f = f
+internal class FuncDisposer : Disposer {
+    public init(proc: @escaping () -> Void) {
+        self.f = proc
+        super.init(void: ())
     }
     
-    public func dispose() {
+    public override func dispose() {
         f()
     }
     

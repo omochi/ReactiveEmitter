@@ -5,7 +5,7 @@ public class OperatorSinkBase<U> {
     }
 
     public var disposer: Disposer {
-        return _disposer.asDisposer()
+        return _disposer
     }
     
     public func emit(event: U) {

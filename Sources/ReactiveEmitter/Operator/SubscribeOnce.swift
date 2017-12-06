@@ -11,6 +11,6 @@ extension EventSourceProtocol {
         //  即座に発火していた場合、ここで即disposeされる。
         disposer.add(innerDisposer)
 
-        return disposer.asDisposer()
+        return disposer
     }
 }

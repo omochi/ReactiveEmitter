@@ -1,11 +1,16 @@
 import Foundation
 
-public class CompositeDisposer : DisposerProtocol {
-    public init() {
+public class CompositeDisposer : Disposer {
+    private override init(void: Void) {
         queue = DispatchQueue.init(label: "\(type(of: self))")
+        super.init(void: ())
     }
     
-    public func dispose() {
+    public convenience init() {
+        self.init(void: ())
+    }
+    
+    public override func dispose() {
         while let disposer = self.popDisposer() {
             disposer.dispose()
         }
