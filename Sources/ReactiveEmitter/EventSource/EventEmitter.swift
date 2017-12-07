@@ -2,11 +2,11 @@ import Foundation
 
 public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
     public init() {
-        queue = DispatchQueue.init(label: "\(type(of: self)).queue")
+        syncQueue = DispatchQueue.init(label: "\(type(of: self)).syncQueue")
     }
     
     public func emit(_ event: Event) {
-        let handlers = queue.sync {
+        let handlers = syncQueue.sync {
             self.handlerBoxes
         }
 
@@ -18,11 +18,12 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
     public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
         let handlerBox = Box(handler)
         
-        queue.async {
+        syncQueue.async {
             self.handlerBoxes.append(handlerBox)
         }
         
         return Unsubscriber.init(emitter: self, handlerBox: handlerBox)
+//        return Disposer {}
     }
     
     public func asEventSink() -> EventSink<(Event)> {
@@ -35,19 +36,20 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
         {
             self.emitter = emitter
             self.handlerBox = handlerBox
+
             super.init(void: ())
         }
-        
+
         public override func dispose() {
             guard let emitter = self.emitter,
                 let handlerBox = self.handlerBox else
             {
                 return
             }
-            
+
             emitter.unsubscribe(handlerBox)
         }
-        
+
         private weak var emitter: EventEmitter<Event>?
         private weak var handlerBox: Box<(Event) -> Void>?
     }
@@ -65,7 +67,7 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
     }
 
     private func unsubscribe(_ box: Box<(Event) -> Void>) {
-        queue.sync {
+        syncQueue.sync {
             guard let index = (handlerBoxes.index { $0 === box }) else {
                 return
             }
@@ -75,5 +77,5 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
     }
     
     private var handlerBoxes: [Box<(Event) -> Void>] = []
-    private let queue: DispatchQueue
+    private let syncQueue: DispatchQueue
 }

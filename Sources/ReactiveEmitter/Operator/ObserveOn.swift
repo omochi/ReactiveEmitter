@@ -1,62 +1,77 @@
 import Foundation
 
 extension EventSourceProtocol {
-    public func observeOn(dispatchQueue: DispatchQueue) -> EventSource<Event> {
-        return EventSourceObserveOn(source: self, dispatchQueue: dispatchQueue).asEventSource()
+    public func observeOn(queue: DispatchQueue) -> EventSource<Event> {
+        return EventSourceObserveOn(source: self, observeQueue: queue).asEventSource()
     }
 }
 
 public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourceProtocol {
     public typealias T = TSource.Event
     
-    public init(source: TSource, dispatchQueue: DispatchQueue) {
+    public init(source: TSource, observeQueue: DispatchQueue) {
         self.source = source
-        self.dispatchQueue = dispatchQueue
+        self.observeQueue = observeQueue
     }
     
     public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
-        let sink = Sink(dispatchQueue: dispatchQueue, handler: handler)
-        sink.addDisposer(source.bind(to: sink))
-        return sink.disposer
+        let sink = Sink(observeQueue: observeQueue, handler: handler)
+        let innerDisposer = source.bind(to: sink)
+        return SinkDisposer.init(innerDisposer: innerDisposer, sink: sink)
     }
     
     private let source: TSource
-    private let dispatchQueue: DispatchQueue
+    private let observeQueue: DispatchQueue
     
-    private class Sink : OperatorSinkBase<T>, EventSinkProtocol {
-        public init(dispatchQueue: DispatchQueue,
+    private class Sink : EventSinkProtocol {
+        public init(observeQueue: DispatchQueue,
                     handler: @escaping (T) -> Void)
         {
-            self.dispatchQueue = dispatchQueue
+            self.observeQueue = observeQueue
             self.syncQueue = DispatchQueue.init(label: "\(type(of: self)).syncQueue")
-
-            super.init(handler: handler)
+            self.handler = handler
         }
-
+        
         public func dispose() {
             syncQueue.async {
                 self.disposed = true
             }
-            
-            disposer.dispose()
         }
         
         public func send(event t: T) {
-            dispatchQueue.async {
+            observeQueue.async {
                 self._send(event: t)
             }
         }
         
         private func _send(event t: T) {
-            if (self.syncQueue.sync { self.disposed }) {
+            if (syncQueue.sync { self.disposed }) {
                 return
             }
             
-            self.emit(event: t)
+            handler(t)
         }
         
-        private let dispatchQueue: DispatchQueue
+        private let observeQueue: DispatchQueue
+        private let handler: (T) -> Void
+        
         private let syncQueue: DispatchQueue
         private var disposed: Bool = false
+    }
+    
+    private class SinkDisposer : Disposer {
+        public init(innerDisposer: Disposer, sink: Sink) {
+            self.innerDisposer = innerDisposer
+            self.sink = sink
+            super.init(void: ())
+        }
+        
+        public override func dispose() {
+            innerDisposer.dispose()
+            sink?.dispose()
+        }
+        
+        private weak var sink: Sink?
+        private let innerDisposer: Disposer
     }
 }

@@ -11,19 +11,23 @@ public class EventSourceZipArray<TSource: EventSourceProtocol> : EventSourceProt
     
     public func subscribe(handler: @escaping ([T]) -> Void) -> Disposer {
         let sink = Sink(count: sources.count, handler: handler)
+        let disposers = CompositeDisposer.init()
         sources.enumerated().forEach { (arg: (Int, TSource)) in
             let (index, source) = arg
-            sink.addDisposer(source.subscribe { sink.send(index, $0) })
+            let innerDisposer = source.subscribe {
+                sink.send(index, $0)
+            }
+            disposers.add(innerDisposer)
         }
-        return sink.disposer
+        return disposers
     }
     
     private let sources: [TSource]
     
-    private class Sink : OperatorSinkBase<[T]> {
+    private class Sink {
         public init(count: Int, handler: @escaping ([T]) -> Void) {
             valuesArray = Array<[T]>.init(repeating: [], count: count)
-            super.init(handler: handler)
+            self.handler = handler
         }
         
         public func send(_ index: Int, _ t: T) {
@@ -47,9 +51,10 @@ public class EventSourceZipArray<TSource: EventSourceProtocol> : EventSourceProt
                 valuesArray[i] = values
             }
 
-            emit(event: event)
+            handler(event)
         }
         
         private var valuesArray: [[T]]
+        private let handler: ([T]) -> Void
     }
 }

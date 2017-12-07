@@ -15,39 +15,54 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
     
     public func subscribe(handler: @escaping (U) -> Void) -> Disposer {
         let sink = Sink(flatMap: flatMap, handler: handler)
-        sink.addDisposer(source.bind(to: sink))
-        return sink.disposer
+        let innerDisposer = source.bind(to: sink)
+        return SinkDisposer.init(innerDisposer: innerDisposer, sink: sink)
     }
     
     private let source: TSource
     private let flatMap: (T) -> USource
     
-    private class Sink : OperatorSinkBase<U>, EventSinkProtocol {
+    private class Sink : EventSinkProtocol {
         public init(flatMap: @escaping (T) -> USource,
                     handler: @escaping (U) -> Void)
         {
             self.flatMap = flatMap
-            
-            super.init(handler: handler)
-            
-            weak var wself = self
-            
-            addDisposer(Disposer {
-                wself?.innerDisposer?.dispose()
-            })
+            self.handler = handler
+        }
+        
+        public func dispose() {
+            uSourceDisposer?.dispose()
+            uSourceDisposer = nil
         }
         
         public func send(event t: T) {
-            innerDisposer?.dispose()
-            innerDisposer = nil
+            dispose()
             
             let uSource: USource = flatMap(t)
-            innerDisposer = CompositeDisposer.init()
-            innerDisposer!.add(uSource.subscribe { self.emit(event: $0) })
+            uSourceDisposer = uSource.subscribe {
+                self.handler($0)
+            }
         }
         
         private let flatMap: (T) -> USource
-        private var innerDisposer: CompositeDisposer?
+        private let handler: (U) -> Void
+        private var uSourceDisposer: Disposer?
+    }
+    
+    private class SinkDisposer : Disposer {
+        public init(innerDisposer: Disposer, sink: Sink) {
+            self.innerDisposer = innerDisposer
+            self.sink = sink
+            super.init(void: ())
+        }
+        
+        public override func dispose() {
+            innerDisposer.dispose()
+            sink?.dispose()
+        }
+        
+        private let innerDisposer: Disposer
+        private weak var sink: Sink?
     }
 }
 

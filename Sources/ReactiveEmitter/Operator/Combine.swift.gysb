@@ -1,12 +1,3 @@
-//
-//  Combine.swift.gysb
-//  ReactiveEmitter
-//
-//  Created by omochimetaru on 2017/11/17.
-//  Copyright © 2017年 omochimetaru. All rights reserved.
-//
-
-import Foundation
 %{
     let ns = [2, 3, 4, 5, 6, 7, 8]
 
@@ -52,19 +43,23 @@ public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separato
     
     public func subscribe(handler: @escaping ((${ (0..<n).map(eventType).joined(separator: ", ") })) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
+        let disposers = CompositeDisposer.init()
         % for i in 0..<n {
-        sink.addDisposer(source${i}.subscribe { sink.send${i}($0) })
+        let innerDisposer${i} = source${i}.subscribe {
+            sink.send${i}($0)
+        }
+        disposers.add(innerDisposer${i})
         % }
-        return sink.disposer
+        return disposers
     }
     
     % for i in 0..<n {
     private let source${i}: T${i}Source
     % }
 
-    private class Sink: OperatorSinkBase<(${ (0..<n).map(eventType).joined(separator: ", ") })> {
-        public override init(handler: @escaping ((${ (0..<n).map(eventType).joined(separator: ", ") })) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((${ (0..<n).map(eventType).joined(separator: ", ") })) -> Void) {
+            self.handler = handler
         }
         
         % for i in 0..<n {
@@ -83,12 +78,14 @@ public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separato
                 return
             }
             
-            emit(event: (${ (0..<n).map { "t\($0)" }.joined(separator: ", ") }))
+            handler((${ (0..<n).map { "t\($0)" }.joined(separator: ", ") }))
         }
         
         % for i in 0..<n {
         private var t${i}: ${eventType(i)}?
         % }
+
+        private let handler: ((${ (0..<n).map(eventType).joined(separator: ", ") })) -> Void
     }
 }
 

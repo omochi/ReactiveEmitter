@@ -1,12 +1,3 @@
-//
-//  Combine.swift.gysb
-//  ReactiveEmitter
-//
-//  Created by omochimetaru on 2017/11/17.
-//  Copyright © 2017年 omochimetaru. All rights reserved.
-//
-
-import Foundation
 
 public func combine<
     T0Source: EventSourceProtocol,
@@ -183,17 +174,24 @@ public class EventSourceCombine2<T0Source, T1Source> : EventSourceProtocol where
     
     public func subscribe(handler: @escaping ((T0, T1)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        return disposers
     }
     
     private let source0: T0Source
     private let source1: T1Source
 
-    private class Sink: OperatorSinkBase<(T0, T1)> {
-        public override init(handler: @escaping ((T0, T1)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -213,11 +211,13 @@ public class EventSourceCombine2<T0Source, T1Source> : EventSourceProtocol where
                 return
             }
             
-            emit(event: (t0, t1))
+            handler((t0, t1))
         }
         
         private var t0: T0?
         private var t1: T1?
+
+        private let handler: ((T0, T1)) -> Void
     }
 }
 
@@ -238,19 +238,29 @@ public class EventSourceCombine3<T0Source, T1Source, T2Source> : EventSourceProt
     
     public func subscribe(handler: @escaping ((T0, T1, T2)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        sink.addDisposer(source2.subscribe { sink.send2($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        let innerDisposer2 = source2.subscribe {
+            sink.send2($0)
+        }
+        disposers.add(innerDisposer2)
+        return disposers
     }
     
     private let source0: T0Source
     private let source1: T1Source
     private let source2: T2Source
 
-    private class Sink: OperatorSinkBase<(T0, T1, T2)> {
-        public override init(handler: @escaping ((T0, T1, T2)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1, T2)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -275,12 +285,14 @@ public class EventSourceCombine3<T0Source, T1Source, T2Source> : EventSourceProt
                 return
             }
             
-            emit(event: (t0, t1, t2))
+            handler((t0, t1, t2))
         }
         
         private var t0: T0?
         private var t1: T1?
         private var t2: T2?
+
+        private let handler: ((T0, T1, T2)) -> Void
     }
 }
 
@@ -304,11 +316,24 @@ public class EventSourceCombine4<T0Source, T1Source, T2Source, T3Source> : Event
     
     public func subscribe(handler: @escaping ((T0, T1, T2, T3)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        sink.addDisposer(source2.subscribe { sink.send2($0) })
-        sink.addDisposer(source3.subscribe { sink.send3($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        let innerDisposer2 = source2.subscribe {
+            sink.send2($0)
+        }
+        disposers.add(innerDisposer2)
+        let innerDisposer3 = source3.subscribe {
+            sink.send3($0)
+        }
+        disposers.add(innerDisposer3)
+        return disposers
     }
     
     private let source0: T0Source
@@ -316,9 +341,9 @@ public class EventSourceCombine4<T0Source, T1Source, T2Source, T3Source> : Event
     private let source2: T2Source
     private let source3: T3Source
 
-    private class Sink: OperatorSinkBase<(T0, T1, T2, T3)> {
-        public override init(handler: @escaping ((T0, T1, T2, T3)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1, T2, T3)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -348,13 +373,15 @@ public class EventSourceCombine4<T0Source, T1Source, T2Source, T3Source> : Event
                 return
             }
             
-            emit(event: (t0, t1, t2, t3))
+            handler((t0, t1, t2, t3))
         }
         
         private var t0: T0?
         private var t1: T1?
         private var t2: T2?
         private var t3: T3?
+
+        private let handler: ((T0, T1, T2, T3)) -> Void
     }
 }
 
@@ -381,12 +408,28 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
     
     public func subscribe(handler: @escaping ((T0, T1, T2, T3, T4)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        sink.addDisposer(source2.subscribe { sink.send2($0) })
-        sink.addDisposer(source3.subscribe { sink.send3($0) })
-        sink.addDisposer(source4.subscribe { sink.send4($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        let innerDisposer2 = source2.subscribe {
+            sink.send2($0)
+        }
+        disposers.add(innerDisposer2)
+        let innerDisposer3 = source3.subscribe {
+            sink.send3($0)
+        }
+        disposers.add(innerDisposer3)
+        let innerDisposer4 = source4.subscribe {
+            sink.send4($0)
+        }
+        disposers.add(innerDisposer4)
+        return disposers
     }
     
     private let source0: T0Source
@@ -395,9 +438,9 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source3: T3Source
     private let source4: T4Source
 
-    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4)> {
-        public override init(handler: @escaping ((T0, T1, T2, T3, T4)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1, T2, T3, T4)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -432,7 +475,7 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit(event: (t0, t1, t2, t3, t4))
+            handler((t0, t1, t2, t3, t4))
         }
         
         private var t0: T0?
@@ -440,6 +483,8 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
         private var t2: T2?
         private var t3: T3?
         private var t4: T4?
+
+        private let handler: ((T0, T1, T2, T3, T4)) -> Void
     }
 }
 
@@ -469,13 +514,32 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
     
     public func subscribe(handler: @escaping ((T0, T1, T2, T3, T4, T5)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        sink.addDisposer(source2.subscribe { sink.send2($0) })
-        sink.addDisposer(source3.subscribe { sink.send3($0) })
-        sink.addDisposer(source4.subscribe { sink.send4($0) })
-        sink.addDisposer(source5.subscribe { sink.send5($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        let innerDisposer2 = source2.subscribe {
+            sink.send2($0)
+        }
+        disposers.add(innerDisposer2)
+        let innerDisposer3 = source3.subscribe {
+            sink.send3($0)
+        }
+        disposers.add(innerDisposer3)
+        let innerDisposer4 = source4.subscribe {
+            sink.send4($0)
+        }
+        disposers.add(innerDisposer4)
+        let innerDisposer5 = source5.subscribe {
+            sink.send5($0)
+        }
+        disposers.add(innerDisposer5)
+        return disposers
     }
     
     private let source0: T0Source
@@ -485,9 +549,9 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source4: T4Source
     private let source5: T5Source
 
-    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4, T5)> {
-        public override init(handler: @escaping ((T0, T1, T2, T3, T4, T5)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1, T2, T3, T4, T5)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -527,7 +591,7 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit(event: (t0, t1, t2, t3, t4, t5))
+            handler((t0, t1, t2, t3, t4, t5))
         }
         
         private var t0: T0?
@@ -536,6 +600,8 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
         private var t3: T3?
         private var t4: T4?
         private var t5: T5?
+
+        private let handler: ((T0, T1, T2, T3, T4, T5)) -> Void
     }
 }
 
@@ -568,14 +634,36 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
     
     public func subscribe(handler: @escaping ((T0, T1, T2, T3, T4, T5, T6)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        sink.addDisposer(source2.subscribe { sink.send2($0) })
-        sink.addDisposer(source3.subscribe { sink.send3($0) })
-        sink.addDisposer(source4.subscribe { sink.send4($0) })
-        sink.addDisposer(source5.subscribe { sink.send5($0) })
-        sink.addDisposer(source6.subscribe { sink.send6($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        let innerDisposer2 = source2.subscribe {
+            sink.send2($0)
+        }
+        disposers.add(innerDisposer2)
+        let innerDisposer3 = source3.subscribe {
+            sink.send3($0)
+        }
+        disposers.add(innerDisposer3)
+        let innerDisposer4 = source4.subscribe {
+            sink.send4($0)
+        }
+        disposers.add(innerDisposer4)
+        let innerDisposer5 = source5.subscribe {
+            sink.send5($0)
+        }
+        disposers.add(innerDisposer5)
+        let innerDisposer6 = source6.subscribe {
+            sink.send6($0)
+        }
+        disposers.add(innerDisposer6)
+        return disposers
     }
     
     private let source0: T0Source
@@ -586,9 +674,9 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source5: T5Source
     private let source6: T6Source
 
-    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4, T5, T6)> {
-        public override init(handler: @escaping ((T0, T1, T2, T3, T4, T5, T6)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1, T2, T3, T4, T5, T6)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -633,7 +721,7 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit(event: (t0, t1, t2, t3, t4, t5, t6))
+            handler((t0, t1, t2, t3, t4, t5, t6))
         }
         
         private var t0: T0?
@@ -643,6 +731,8 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
         private var t4: T4?
         private var t5: T5?
         private var t6: T6?
+
+        private let handler: ((T0, T1, T2, T3, T4, T5, T6)) -> Void
     }
 }
 
@@ -678,15 +768,40 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
     
     public func subscribe(handler: @escaping ((T0, T1, T2, T3, T4, T5, T6, T7)) -> Void) -> Disposer {
         let sink = Sink(handler: handler)
-        sink.addDisposer(source0.subscribe { sink.send0($0) })
-        sink.addDisposer(source1.subscribe { sink.send1($0) })
-        sink.addDisposer(source2.subscribe { sink.send2($0) })
-        sink.addDisposer(source3.subscribe { sink.send3($0) })
-        sink.addDisposer(source4.subscribe { sink.send4($0) })
-        sink.addDisposer(source5.subscribe { sink.send5($0) })
-        sink.addDisposer(source6.subscribe { sink.send6($0) })
-        sink.addDisposer(source7.subscribe { sink.send7($0) })
-        return sink.disposer
+        let disposers = CompositeDisposer.init()
+        let innerDisposer0 = source0.subscribe {
+            sink.send0($0)
+        }
+        disposers.add(innerDisposer0)
+        let innerDisposer1 = source1.subscribe {
+            sink.send1($0)
+        }
+        disposers.add(innerDisposer1)
+        let innerDisposer2 = source2.subscribe {
+            sink.send2($0)
+        }
+        disposers.add(innerDisposer2)
+        let innerDisposer3 = source3.subscribe {
+            sink.send3($0)
+        }
+        disposers.add(innerDisposer3)
+        let innerDisposer4 = source4.subscribe {
+            sink.send4($0)
+        }
+        disposers.add(innerDisposer4)
+        let innerDisposer5 = source5.subscribe {
+            sink.send5($0)
+        }
+        disposers.add(innerDisposer5)
+        let innerDisposer6 = source6.subscribe {
+            sink.send6($0)
+        }
+        disposers.add(innerDisposer6)
+        let innerDisposer7 = source7.subscribe {
+            sink.send7($0)
+        }
+        disposers.add(innerDisposer7)
+        return disposers
     }
     
     private let source0: T0Source
@@ -698,9 +813,9 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
     private let source6: T6Source
     private let source7: T7Source
 
-    private class Sink: OperatorSinkBase<(T0, T1, T2, T3, T4, T5, T6, T7)> {
-        public override init(handler: @escaping ((T0, T1, T2, T3, T4, T5, T6, T7)) -> Void) {
-            super.init(handler: handler)
+    private class Sink {
+        public init(handler: @escaping ((T0, T1, T2, T3, T4, T5, T6, T7)) -> Void) {
+            self.handler = handler
         }
         
         public func send0(_ t0: T0) {
@@ -750,7 +865,7 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
                 return
             }
             
-            emit(event: (t0, t1, t2, t3, t4, t5, t6, t7))
+            handler((t0, t1, t2, t3, t4, t5, t6, t7))
         }
         
         private var t0: T0?
@@ -761,6 +876,8 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
         private var t5: T5?
         private var t6: T6?
         private var t7: T7?
+
+        private let handler: ((T0, T1, T2, T3, T4, T5, T6, T7)) -> Void
     }
 }
 

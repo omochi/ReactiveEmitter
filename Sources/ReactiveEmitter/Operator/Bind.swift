@@ -3,6 +3,9 @@ extension EventSourceProtocol {
         where Event == X._Event
     {
         let sink = sinkConvertible.asEventSink()
-        return self.subscribe { sink.send(event: $0) }
+        let disposer = self.subscribe {
+            sink.send(event: $0)
+        }
+        return disposer
     }
 }
