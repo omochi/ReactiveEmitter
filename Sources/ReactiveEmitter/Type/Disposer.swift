@@ -1,31 +1,40 @@
-public class Disposer : DisposerProtocol, FactoryInitializable {
-    internal init(void: Void) {}
-    
-    public convenience init() {
-        self.init(factory: { NopDisposer.init(void: ()) })
+public final class Disposer : DisposerProtocol {
+    public init<X: DisposerProtocol>(_ base: X) {
+        self.box = _DisposerBox<X>(base)
     }
     
-    public convenience init(_ f: @escaping () -> Void) {
-        self.init(factory: { FuncDisposer.init(proc: f) })
+    public init() {
+        self.box = _DisposerBox(NopDisposer.init())
     }
     
-    public convenience init<X: DisposerProtocol>(_ base: X) {
-        self.init(factory: { _DisposerBox.init(base: base) })
+    public init(_ f: @escaping () -> Void) {
+        self.box = _DisposerBox(FuncDisposer.init(f))
+    }
+    
+    public init(_ disposers: [Disposer]) {
+        self.box = _DisposerBox(CompositeDisposer.init(disposers))
     }
     
     public func dispose() {
-        fatalError("abstract")
+        box.dispose()
     }
     
     public func asDisposer() -> Disposer {
         return self
     }
+    
+    private let box: _AnyDisposerBox
 }
 
-internal class _DisposerBox<X: DisposerProtocol> : Disposer {
-    public init(base: X) {
+internal class _AnyDisposerBox {
+    public func dispose() {
+        fatalError("abstract")
+    }
+}
+
+internal class _DisposerBox<X: DisposerProtocol> : _AnyDisposerBox {
+    public init(_ base: X) {
         self.base = base
-        super.init(void: ())
     }
     
     public override func dispose() {

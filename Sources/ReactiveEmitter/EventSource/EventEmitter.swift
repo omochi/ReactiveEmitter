@@ -22,25 +22,22 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
             self.handlerBoxes.append(handlerBox)
         }
         
-        return Unsubscriber.init(emitter: self, handlerBox: handlerBox)
-//        return Disposer {}
+        return Unsubscriber.init(emitter: self, handlerBox: handlerBox).asDisposer()
     }
     
     public func asEventSink() -> EventSink<(Event)> {
         return Sink(self).asEventSink()
     }
     
-    private class Unsubscriber : Disposer {
+    private class Unsubscriber : DisposerProtocol {
         public init(emitter: EventEmitter<Event>,
                     handlerBox: Box<(Event) -> Void>)
         {
             self.emitter = emitter
             self.handlerBox = handlerBox
-
-            super.init(void: ())
         }
 
-        public override func dispose() {
+        public func dispose() {
             guard let emitter = self.emitter,
                 let handlerBox = self.handlerBox else
             {

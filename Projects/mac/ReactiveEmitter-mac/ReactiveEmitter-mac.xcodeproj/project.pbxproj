@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D60D7EB31FD7EB6F008020AF /* FactoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60D7EB21FD7EB6F008020AF /* FactoryInit.swift */; };
-		D61580C51FD8E7B8000064B2 /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848481FA997710066505A /* EventEmitter.swift */; };
 		D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */; };
 		D664673B1FD7A31C001DBAD7 /* DisposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */; };
 		D664673D1FD7A4C8001DBAD7 /* NopDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */; };
@@ -20,12 +18,28 @@
 		D6A848541FA997710066505A /* EventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848491FA997710066505A /* EventSource.swift */; };
 		D6AA0A331FCBA23400F382CD /* WeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A321FCBA23400F382CD /* WeakBox.swift */; };
 		D6BD537A1FC82BBE00D2DD5E /* EventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD53791FC82BBE00D2DD5E /* EventSink.swift */; };
+		D6E61BEB1FDA4ED10017BF6E /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848481FA997710066505A /* EventEmitter.swift */; };
+		D6E61BEC1FDA4ED10017BF6E /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484E1FA997710066505A /* Property.swift */; };
+		D6E61BED1FDA4ED10017BF6E /* ArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA869C1FC2711400E3E4E8 /* ArrayProperty.swift */; };
+		D6E61BEE1FDA4ED10017BF6E /* LateInitProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD537D1FC8375600D2DD5E /* LateInitProperty.swift */; };
+		D6E61BEF1FDA4ED10017BF6E /* WeakProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A301FCBA1EB00F382CD /* WeakProperty.swift */; };
+		D6E61BF01FDA4ED40017BF6E /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD53661FC5762900D2DD5E /* Never.swift */; };
+		D6E61BF11FDA4ED40017BF6E /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BD537B1FC8318F00D2DD5E /* Bind.swift */; };
+		D6E61BF21FDA4ED40017BF6E /* SubscribeOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A3A1FCC025900F382CD /* SubscribeOnce.swift */; };
+		D6E61BF31FDA4ED40017BF6E /* ValueOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A401FCD074100F382CD /* ValueOf.swift */; };
+		D6E61BF41FDA4ED40017BF6E /* FlatMapLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484B1FA997710066505A /* FlatMapLatest.swift */; };
+		D6E61BF51FDA4ED40017BF6E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484C1FA997710066505A /* Map.swift */; };
+		D6E61BF61FDA4ED40017BF6E /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8484D1FA997710066505A /* Merge.swift */; };
+		D6E61BF71FDA4ED40017BF6E /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDA8351FAB1A6A00A0AC47 /* ObserveOn.swift */; };
+		D6E61BF81FDA4ED40017BF6E /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6060A221FBACC8000550164 /* Combine.swift */; };
+		D6E61BFA1FDA4ED40017BF6E /* ZipArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A3E1FCCF89A00F382CD /* ZipArray.swift */; };
+		D6E61BFB1FDA4ED40017BF6E /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA0A451FCD11DA00F382CD /* Sequence.swift */; };
+		D6E61BFC1FDA4ED40017BF6E /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61580A51FD8D7F1000064B2 /* Debug.swift */; };
 		D6FA869F1FC2711500E3E4E8 /* RangeReplaceableCollectionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D6060A221FBACC8000550164 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
-		D60D7EB21FD7EB6F008020AF /* FactoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryInit.swift; sourceTree = "<group>"; };
 		D61580A51FD8D7F1000064B2 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncDisposer.swift; sourceTree = "<group>"; };
 		D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposerProtocol.swift; sourceTree = "<group>"; };
@@ -169,7 +183,6 @@
 			children = (
 				D6A848441FA997710066505A /* Box.swift */,
 				D6AA0A321FCBA23400F382CD /* WeakBox.swift */,
-				D60D7EB21FD7EB6F008020AF /* FactoryInit.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -254,18 +267,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */,
+				D6E61BF21FDA4ED40017BF6E /* SubscribeOnce.swift in Sources */,
+				D6E61BFB1FDA4ED40017BF6E /* Sequence.swift in Sources */,
+				D6E61BEB1FDA4ED10017BF6E /* EventEmitter.swift in Sources */,
 				D6FA869F1FC2711500E3E4E8 /* RangeReplaceableCollectionClass.swift in Sources */,
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
+				D6E61BF71FDA4ED40017BF6E /* ObserveOn.swift in Sources */,
 				D664673D1FD7A4C8001DBAD7 /* NopDisposer.swift in Sources */,
-				D60D7EB31FD7EB6F008020AF /* FactoryInit.swift in Sources */,
 				D6A8484F1FA997710066505A /* Box.swift in Sources */,
+				D6E61BED1FDA4ED10017BF6E /* ArrayProperty.swift in Sources */,
+				D6E61BEC1FDA4ED10017BF6E /* Property.swift in Sources */,
 				D6A848541FA997710066505A /* EventSource.swift in Sources */,
 				D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */,
+				D6E61BEF1FDA4ED10017BF6E /* WeakProperty.swift in Sources */,
+				D6E61BFC1FDA4ED40017BF6E /* Debug.swift in Sources */,
+				D6E61BF81FDA4ED40017BF6E /* Combine.swift in Sources */,
 				D6BD537A1FC82BBE00D2DD5E /* EventSink.swift in Sources */,
+				D6E61BEE1FDA4ED10017BF6E /* LateInitProperty.swift in Sources */,
+				D6E61BF31FDA4ED40017BF6E /* ValueOf.swift in Sources */,
+				D6E61BF41FDA4ED40017BF6E /* FlatMapLatest.swift in Sources */,
 				D6A848521FA997710066505A /* DisposerBag.swift in Sources */,
 				D664673B1FD7A31C001DBAD7 /* DisposerProtocol.swift in Sources */,
+				D6E61BFA1FDA4ED40017BF6E /* ZipArray.swift in Sources */,
+				D6E61BF61FDA4ED40017BF6E /* Merge.swift in Sources */,
+				D6E61BF51FDA4ED40017BF6E /* Map.swift in Sources */,
+				D6E61BF01FDA4ED40017BF6E /* Never.swift in Sources */,
+				D6E61BF11FDA4ED40017BF6E /* Bind.swift in Sources */,
 				D6AA0A331FCBA23400F382CD /* WeakBox.swift in Sources */,
-				D61580C51FD8E7B8000064B2 /* EventEmitter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

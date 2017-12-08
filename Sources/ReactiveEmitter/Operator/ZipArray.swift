@@ -19,7 +19,7 @@ public class EventSourceZipArray<TSource: EventSourceProtocol> : EventSourceProt
             }
             disposers.add(innerDisposer)
         }
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let sources: [TSource]

@@ -50,7 +50,7 @@ public class EventSourceCombine${ n }<${ (0..<n).map(sourceType).joined(separato
         }
         disposers.add(innerDisposer${i})
         % }
-        return disposers
+        return disposers.asDisposer()
     }
     
     % for i in 0..<n {

@@ -17,7 +17,7 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
     public func subscribe(handler: @escaping (T) -> Void) -> Disposer {
         let sink = Sink(observeQueue: observeQueue, handler: handler)
         let innerDisposer = source.bind(to: sink)
-        return SinkDisposer.init(innerDisposer: innerDisposer, sink: sink)
+        return SinkDisposer.init(innerDisposer: innerDisposer, sink: sink).asDisposer()
     }
     
     private let source: TSource
@@ -59,14 +59,13 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
         private var disposed: Bool = false
     }
     
-    private class SinkDisposer : Disposer {
+    private class SinkDisposer : DisposerProtocol {
         public init(innerDisposer: Disposer, sink: Sink) {
             self.innerDisposer = innerDisposer
             self.sink = sink
-            super.init(void: ())
         }
         
-        public override func dispose() {
+        public func dispose() {
             innerDisposer.dispose()
             sink?.dispose()
         }

@@ -16,7 +16,7 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
     public func subscribe(handler: @escaping (U) -> Void) -> Disposer {
         let sink = Sink(flatMap: flatMap, handler: handler)
         let innerDisposer = source.bind(to: sink)
-        return SinkDisposer.init(innerDisposer: innerDisposer, sink: sink)
+        return SinkDisposer.init(innerDisposer: innerDisposer, sink: sink).asDisposer()
     }
     
     private let source: TSource
@@ -49,14 +49,13 @@ public class EventSourceFlatMapLatest<TSource: EventSourceProtocol, USource: Eve
         private var uSourceDisposer: Disposer?
     }
     
-    private class SinkDisposer : Disposer {
+    private class SinkDisposer : DisposerProtocol {
         public init(innerDisposer: Disposer, sink: Sink) {
             self.innerDisposer = innerDisposer
             self.sink = sink
-            super.init(void: ())
         }
         
-        public override func dispose() {
+        public func dispose() {
             innerDisposer.dispose()
             sink?.dispose()
         }

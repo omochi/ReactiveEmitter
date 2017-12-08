@@ -16,7 +16,7 @@ public class EventSourceMerge<TSource: EventSourceProtocol> : EventSourceProtoco
             let disposer = source.bind(to: sink)
             disposers.add(disposer)
         }
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let sources: [TSource]

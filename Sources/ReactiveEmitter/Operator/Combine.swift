@@ -183,7 +183,7 @@ public class EventSourceCombine2<T0Source, T1Source> : EventSourceProtocol where
             sink.send1($0)
         }
         disposers.add(innerDisposer1)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
@@ -251,7 +251,7 @@ public class EventSourceCombine3<T0Source, T1Source, T2Source> : EventSourceProt
             sink.send2($0)
         }
         disposers.add(innerDisposer2)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
@@ -333,7 +333,7 @@ public class EventSourceCombine4<T0Source, T1Source, T2Source, T3Source> : Event
             sink.send3($0)
         }
         disposers.add(innerDisposer3)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
@@ -429,7 +429,7 @@ public class EventSourceCombine5<T0Source, T1Source, T2Source, T3Source, T4Sourc
             sink.send4($0)
         }
         disposers.add(innerDisposer4)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
@@ -539,7 +539,7 @@ public class EventSourceCombine6<T0Source, T1Source, T2Source, T3Source, T4Sourc
             sink.send5($0)
         }
         disposers.add(innerDisposer5)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
@@ -663,7 +663,7 @@ public class EventSourceCombine7<T0Source, T1Source, T2Source, T3Source, T4Sourc
             sink.send6($0)
         }
         disposers.add(innerDisposer6)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
@@ -801,7 +801,7 @@ public class EventSourceCombine8<T0Source, T1Source, T2Source, T3Source, T4Sourc
             sink.send7($0)
         }
         disposers.add(innerDisposer7)
-        return disposers
+        return disposers.asDisposer()
     }
     
     private let source0: T0Source
