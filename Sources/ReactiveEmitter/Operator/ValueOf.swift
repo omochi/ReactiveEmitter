@@ -1,5 +1,5 @@
 extension EventSource {
-    public static func of<T>(_ value: T) -> EventSource<T> {
-        return Property<T>.init(value).asEventSource()
+    public static func of(_ value: Event) -> EventSource<Event> {
+        return Property<Event>.init(value).asEventSource()
     }
 }
