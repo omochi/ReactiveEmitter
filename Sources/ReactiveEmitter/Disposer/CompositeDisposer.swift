@@ -15,7 +15,7 @@ public class CompositeDisposer : DisposerProtocol {
             disposer.dispose()
         }
         
-        queue.async {
+        queue.sync {
             self.disposed = true
         }
     }
@@ -26,8 +26,8 @@ public class CompositeDisposer : DisposerProtocol {
             return
         }
 
-        queue.async {
-            self.disposers.append(disposer.asDisposer())
+        queue.sync {
+            self.disposers.insertAfterLast(disposer.asDisposer())
         }
     }
     
@@ -39,17 +39,19 @@ public class CompositeDisposer : DisposerProtocol {
         }
     }
     
+    private typealias Disposers = LinkedList<Disposer>
+    
     private func popDisposer() -> Disposer? {
         return queue.sync {
             guard let d = disposers.first else {
                 return nil
             }
-            disposers.removeFirst()
+            disposers.remove(node: disposers.firstNode!)
             return d
         }
     }
     
     private var disposed: Bool = false
-    private var disposers: [Disposer] = []
+    private var disposers: Disposers = .init()
     private let queue: DispatchQueue
 }

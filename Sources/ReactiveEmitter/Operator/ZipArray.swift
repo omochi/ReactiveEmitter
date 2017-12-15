@@ -26,12 +26,17 @@ public class EventSourceZipArray<TSource: EventSourceProtocol> : EventSourceProt
     
     private class Sink {
         public init(count: Int, handler: @escaping ([T]) -> Void) {
-            valuesArray = Array<[T]>.init(repeating: [], count: count)
+            var valuesArray: [LinkedList<T>] = .init()
+            valuesArray.reserveCapacity(count)
+            for _ in 0..<count {
+                valuesArray.append(LinkedList<T>.init())
+            }
+            self.valuesArray = valuesArray
             self.handler = handler
         }
         
         public func send(_ index: Int, _ t: T) {
-            valuesArray[index].append(t)
+            valuesArray[index].insertAfterLast(t)
             mayEmit()
         }
         
@@ -42,19 +47,19 @@ public class EventSourceZipArray<TSource: EventSourceProtocol> : EventSourceProt
                 }
             }
             
-            var event: [T] = []
+            var event: Array<T> = .init()
+            event.reserveCapacity(valuesArray.count)
             
-            for i in 0..<valuesArray.count {
-                var values = valuesArray[i]
-                let headValue = values.removeFirst()
-                event.append(headValue)
-                valuesArray[i] = values
+            for values in valuesArray {
+                let headNode = values.firstNode!
+                event.append(headNode.value)
+                values.remove(node: headNode)
             }
 
             handler(event)
         }
         
-        private var valuesArray: [[T]]
+        private let valuesArray: [LinkedList<T>]
         private let handler: ([T]) -> Void
     }
 }

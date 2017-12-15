@@ -7,48 +7,48 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
     
     public func emit(_ event: Event) {
         let handlers = syncQueue.sync {
-            self.handlerBoxes
+            Array<(Event)->Void>(self.handlers)
         }
 
         handlers.forEach { handler in
-            handler.value(event)
+            handler(event)
         }
     }
     
     public func subscribe(handler: @escaping (Event) -> Void) -> Disposer {
-        let handlerBox = Box(handler)
-        
-        syncQueue.async {
-            self.handlerBoxes.append(handlerBox)
+        let node = syncQueue.sync {
+            self.handlers.insertAfterLast(handler)
         }
         
-        return Unsubscriber.init(emitter: self, handlerBox: handlerBox).asDisposer()
+        return Unsubscriber.init(emitter: self, node: node).asDisposer()
     }
     
     public func asEventSink() -> EventSink<(Event)> {
         return Sink(self).asEventSink()
     }
     
+    private typealias Handlers = LinkedList<(Event) -> Void>
+    
     private class Unsubscriber : DisposerProtocol {
         public init(emitter: EventEmitter<Event>,
-                    handlerBox: Box<(Event) -> Void>)
+                    node: Handlers.Node)
         {
             self.emitter = emitter
-            self.handlerBox = handlerBox
+            self.node = node
         }
 
         public func dispose() {
             guard let emitter = self.emitter,
-                let handlerBox = self.handlerBox else
+                let node = self.node else
             {
                 return
             }
 
-            emitter.unsubscribe(handlerBox)
+            emitter.unsubscribe(node)
         }
 
         private weak var emitter: EventEmitter<Event>?
-        private weak var handlerBox: Box<(Event) -> Void>?
+        private weak var node: Handlers.Node?
     }
 
     private class Sink<Event> : EventSinkProtocol {
@@ -63,16 +63,12 @@ public class EventEmitter<Event> : EventSourceProtocol, EventSinkConvertible {
         private let emitter: EventEmitter<Event>
     }
 
-    private func unsubscribe(_ box: Box<(Event) -> Void>) {
+    private func unsubscribe(_ node: Handlers.Node) {
         syncQueue.sync {
-            guard let index = (handlerBoxes.index { $0 === box }) else {
-                return
-            }
-            
-            handlerBoxes.remove(at: index)
+            handlers.remove(node: node)
         }
     }
     
-    private var handlerBoxes: [Box<(Event) -> Void>] = []
+    private var handlers: Handlers = .init()
     private let syncQueue: DispatchQueue
 }

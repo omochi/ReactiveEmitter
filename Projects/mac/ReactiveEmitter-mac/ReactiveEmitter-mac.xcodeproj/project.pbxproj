@@ -10,6 +10,9 @@
 		D66467391FD7A2F1001DBAD7 /* FuncDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66467381FD7A2F1001DBAD7 /* FuncDisposer.swift */; };
 		D664673B1FD7A31C001DBAD7 /* DisposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */; };
 		D664673D1FD7A4C8001DBAD7 /* NopDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */; };
+		D69AF1611FE38D4300E07406 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69AF1601FE38D4300E07406 /* LinkedList.swift */; };
+		D69AF16B1FE3A40200E07406 /* ReactiveEmitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A848381FA996BC0066505A /* ReactiveEmitter.framework */; };
+		D69AF1751FE3A42E00E07406 /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69AF1741FE3A42E00E07406 /* LinkedListTests.swift */; };
 		D6A8483D1FA996BC0066505A /* ReactiveEmitter_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D6A8484F1FA997710066505A /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848441FA997710066505A /* Box.swift */; };
 		D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A848451FA997710066505A /* CompositeDisposer.swift */; };
@@ -38,6 +41,16 @@
 		D6FA869F1FC2711500E3E4E8 /* RangeReplaceableCollectionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA869D1FC2711400E3E4E8 /* RangeReplaceableCollectionClass.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D69AF16C1FE3A40200E07406 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6A8482F1FA996BC0066505A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6A848371FA996BC0066505A;
+			remoteInfo = ReactiveEmitter;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		D6060A221FBACC8000550164 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		D61580A51FD8D7F1000064B2 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
@@ -45,6 +58,10 @@
 		D664673A1FD7A31C001DBAD7 /* DisposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposerProtocol.swift; sourceTree = "<group>"; };
 		D664673C1FD7A4C8001DBAD7 /* NopDisposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NopDisposer.swift; sourceTree = "<group>"; };
 		D679B23C1FBE83CE009601E9 /* Combine.swift.gysb */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Combine.swift.gysb; sourceTree = "<group>"; };
+		D69AF1601FE38D4300E07406 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		D69AF1661FE3A40100E07406 /* ReactiveEmitterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveEmitterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D69AF16A1FE3A40200E07406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D69AF1741FE3A42E00E07406 /* LinkedListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedListTests.swift; sourceTree = "<group>"; };
 		D6A848381FA996BC0066505A /* ReactiveEmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveEmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6A8483B1FA996BC0066505A /* ReactiveEmitter_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactiveEmitter_mac.h; sourceTree = "<group>"; };
 		D6A8483C1FA996BC0066505A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +91,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D69AF1631FE3A40100E07406 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D69AF16B1FE3A40200E07406 /* ReactiveEmitter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D6A848341FA996BC0066505A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -84,11 +109,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D69AF1671FE3A40200E07406 /* ReactiveEmitterTests */ = {
+			isa = PBXGroup;
+			children = (
+				D69AF16A1FE3A40200E07406 /* Info.plist */,
+			);
+			path = ReactiveEmitterTests;
+			sourceTree = "<group>";
+		};
+		D69AF1731FE3A42E00E07406 /* ReactiveEmitterTests */ = {
+			isa = PBXGroup;
+			children = (
+				D69AF1741FE3A42E00E07406 /* LinkedListTests.swift */,
+			);
+			name = ReactiveEmitterTests;
+			path = ../../../Tests/ReactiveEmitterTests;
+			sourceTree = "<group>";
+		};
 		D6A8482E1FA996BC0066505A = {
 			isa = PBXGroup;
 			children = (
 				D6A848431FA997710066505A /* ReactiveEmitter */,
 				D6A8483A1FA996BC0066505A /* ReactiveEmitter-mac */,
+				D69AF1731FE3A42E00E07406 /* ReactiveEmitterTests */,
+				D69AF1671FE3A40200E07406 /* ReactiveEmitterTests */,
 				D6A848391FA996BC0066505A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				D6A848381FA996BC0066505A /* ReactiveEmitter.framework */,
+				D69AF1661FE3A40100E07406 /* ReactiveEmitterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +228,7 @@
 			children = (
 				D6A848441FA997710066505A /* Box.swift */,
 				D6AA0A321FCBA23400F382CD /* WeakBox.swift */,
+				D69AF1601FE38D4300E07406 /* LinkedList.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -201,6 +247,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D69AF1651FE3A40100E07406 /* ReactiveEmitterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D69AF16E1FE3A40200E07406 /* Build configuration list for PBXNativeTarget "ReactiveEmitterTests" */;
+			buildPhases = (
+				D69AF1621FE3A40100E07406 /* Sources */,
+				D69AF1631FE3A40100E07406 /* Frameworks */,
+				D69AF1641FE3A40100E07406 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D69AF16D1FE3A40200E07406 /* PBXTargetDependency */,
+			);
+			name = ReactiveEmitterTests;
+			productName = ReactiveEmitterTests;
+			productReference = D69AF1661FE3A40100E07406 /* ReactiveEmitterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D6A848371FA996BC0066505A /* ReactiveEmitter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D6A848401FA996BC0066505A /* Build configuration list for PBXNativeTarget "ReactiveEmitter" */;
@@ -225,9 +289,14 @@
 		D6A8482F1FA996BC0066505A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = omochimetaru;
 				TargetAttributes = {
+					D69AF1651FE3A40100E07406 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					D6A848371FA996BC0066505A = {
 						CreatedOnToolsVersion = 9.0.1;
 						ProvisioningStyle = Automatic;
@@ -247,11 +316,19 @@
 			projectRoot = "";
 			targets = (
 				D6A848371FA996BC0066505A /* ReactiveEmitter */,
+				D69AF1651FE3A40100E07406 /* ReactiveEmitterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D69AF1641FE3A40100E07406 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D6A848361FA996BC0066505A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -262,6 +339,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D69AF1621FE3A40100E07406 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D69AF1751FE3A42E00E07406 /* LinkedListTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D6A848331FA996BC0066505A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -269,6 +354,7 @@
 				D6A848501FA997710066505A /* CompositeDisposer.swift in Sources */,
 				D6E61BF21FDA4ED40017BF6E /* SubscribeOnce.swift in Sources */,
 				D6E61BFB1FDA4ED40017BF6E /* Sequence.swift in Sources */,
+				D69AF1611FE38D4300E07406 /* LinkedList.swift in Sources */,
 				D6E61BEB1FDA4ED10017BF6E /* EventEmitter.swift in Sources */,
 				D6FA869F1FC2711500E3E4E8 /* RangeReplaceableCollectionClass.swift in Sources */,
 				D6A848511FA997710066505A /* Disposer.swift in Sources */,
@@ -299,7 +385,41 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D69AF16D1FE3A40200E07406 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6A848371FA996BC0066505A /* ReactiveEmitter */;
+			targetProxy = D69AF16C1FE3A40200E07406 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		D69AF16F1FE3A40200E07406 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ReactiveEmitterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.omochimetaru.ReactiveEmitterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		D69AF1701FE3A40200E07406 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ReactiveEmitterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.omochimetaru.ReactiveEmitterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		D6A8483E1FA996BC0066505A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -457,6 +577,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D69AF16E1FE3A40200E07406 /* Build configuration list for PBXNativeTarget "ReactiveEmitterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D69AF16F1FE3A40200E07406 /* Debug */,
+				D69AF1701FE3A40200E07406 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D6A848321FA996BC0066505A /* Build configuration list for PBXProject "ReactiveEmitter-mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

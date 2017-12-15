@@ -33,7 +33,7 @@ public class EventSourceObserveOn<TSource: EventSourceProtocol> : EventSourcePro
         }
         
         public func dispose() {
-            syncQueue.async {
+            syncQueue.sync {
                 self.disposed = true
             }
         }
