@@ -26,7 +26,7 @@ public class CompositeDisposer : DisposerProtocol {
             return
         }
 
-        queue.sync {
+        let _ = queue.sync {
             self.disposers.insertAfterLast(disposer.asDisposer())
         }
     }
