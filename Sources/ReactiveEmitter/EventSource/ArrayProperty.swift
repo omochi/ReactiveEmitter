@@ -1,9 +1,9 @@
 public class ArrayProperty<T> : EventSourceProtocol {
     public typealias Event = [T]
-    
-    public struct ReplaceEvent {
-        public var range: Range<Int>
-        public var elements: [T]
+
+    public enum EditEvent {
+        case set([T])
+        case replace(Range<Int>, [T])
     }
     
     public class Array : RangeReplaceableCollectionClass, BidirectionalCollection {
@@ -20,7 +20,7 @@ public class ArrayProperty<T> : EventSourceProtocol {
                 return Swift.Array<T>(self)
             }
             set {
-                replaceSubrange(startIndex..<endIndex, with: newValue)
+                property.setValue(newValue)
             }
         }
         
@@ -65,7 +65,7 @@ public class ArrayProperty<T> : EventSourceProtocol {
     public init(_ value: [T]) {
         self._value = value
         valueEmitter = .init()
-        replaceEmitter = .init()
+        editEmitter = .init()
     }
     
     public var value: [T] {
@@ -89,23 +89,30 @@ public class ArrayProperty<T> : EventSourceProtocol {
         return disposer
     }
     
-    public func subscribeReplace(handler: @escaping (ReplaceEvent) -> Void) -> Disposer {
-        let disposer = replaceEmitter.subscribe(handler: handler)
+    public func subscribeEdit(handler: @escaping (EditEvent) -> Void) -> Disposer {
+        let disposer = editEmitter.subscribe(handler: handler)
+        handler(.set(_value))
         return disposer
     }
     
-    public func asReplaceEventSource() -> EventSource<ReplaceEvent> {
-        return replaceEmitter.asEventSource()
+    public func asEditStream() -> EventSource<EditEvent> {
+        return editEmitter.asEventSource()
+    }
+    
+    private func setValue(_ value: [T]) {
+        _value = value
+        editEmitter.emit(.set(value))
+        valueEmitter.emit(_value)
     }
     
     private func replaceSubrange(_ range: Range<Int>, with newElements: [T]) {
         _value.replaceSubrange(range, with: newElements)
-        replaceEmitter.emit(.init(range: range, elements: newElements))
+        editEmitter.emit(.replace(range, newElements))
         valueEmitter.emit(_value)
     }
     
     private var _value: [T]
     
     private let valueEmitter: EventEmitter<[T]>
-    private let replaceEmitter: EventEmitter<ReplaceEvent>
+    private let editEmitter: EventEmitter<EditEvent>
 }
