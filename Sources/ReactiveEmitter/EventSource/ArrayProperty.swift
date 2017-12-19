@@ -6,7 +6,7 @@ public class ArrayProperty<T> : EventSourceProtocol {
         public var elements: [T]
     }
     
-    public class Array : RangeReplaceableCollectionClass {
+    public class Array : RangeReplaceableCollectionClass, BidirectionalCollection {
         public typealias Element = T
         public typealias Index = Int
         public typealias IndexDistance = Int
